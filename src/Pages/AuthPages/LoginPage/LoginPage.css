@@ -1,186 +1,182 @@
-
 .logo {
-    width: 100px;
-    margin-bottom: 20px;
-  }
-    .loginWrapper {
-      display: flex;
-      align-items: center;
-      height: 100vh;
-  
-  }
-  .loginRight {
-    flex: 1;
-    height: 100vh;
-    background: url("../../../Images/cover.avif");
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .loginRightContent {
-    width: 60%;
-    height: 50%;
-    padding: 80px 30px;
-    background-color: rgba(248, 248, 248, 0.963);
-    border-radius: 4px;
-  }
-  
-  .loginRightContent p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 24px;
-    line-height: 20px;
-    color:#7d5ffe;
-    margin-bottom: 15px;
-  }
-  
-  .loginRightContent h6 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 50px;
-    line-height: 50px;
-    color:#7d5ffe;
-    margin-bottom: 15px;
-  }
-  
-  .loginLeft {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .loginLeftContainer {
-    display: flex;
-    flex-direction: column;
-  
-  }
-  
-  
-  .loginLeftInfo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .loginLeftInfo img {
-    width: 100px;
-    height: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .loginLeftTitle {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .loginLeftTitle h6 {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 20px;
-    line-height: 20px;
-    margin-bottom: 20px;
-    color: var(--black);
-  }
-  
-  .loginLeftTitle p {
-    font-style: normal;
-    font-weight: 600;
-    font-size: 26px;
-    line-height: 20px;
-    color: #7d5ffe;
-    margin-bottom: 1rem;
-  }
-  
-  .loginLeftInput {
-    margin-bottom: 20px;
-    position: relative;
-  }
-  
-  input[type="text"],
-  input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 5px;
-    background-color: #7d5ffe;
-    color: #fff;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background-color 0.3s;
-  }
-  
-  .dontHaveAccount {
-    font-family: "Poppins", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 30px;
-    color: black;
-    margin-bottom: 20px;
-    padding-left: 60px;
-  }
-  
-  .dontHaveAccount span {
-    color:#7d5ffe;
-    cursor: pointer;
-  }
-  .coolinput {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  
-  .coolinput label.text {
-    font-size: 0.95rem;
-    color: #818CF8;
-    font-weight: 700;
-    position: relative;
-    top: 0.5rem;
-    margin: 0 0 0 7px;
-    padding: 0 3px;
-    background: #ffffff;
-    width: fit-content;
-  }
-  
-  .coolinput input[type=text].input {
-    padding: 11px 10px;
-    font-size: 0.75rem;
-    border: 2px #818CF8 solid;
-    border-radius: 5px;
-    background: #ffffff;
-  }
-  .coolinput label.password {
-    font-size: 0.95rem;
-    color: #818CF8;
-    font-weight: 700;
-    position: relative;
-    top: 0.5rem;
-    margin: 0 0 0 7px;
-    padding: 0 3px;
-    background: #ffffff;
-    width: fit-content;
-  }
-  
-  .coolinput input[type=password].input {
-    padding: 11px 10px;
-    font-size: 0.75rem;
-    border: 2px #818CF8 solid;
-    border-radius: 5px;
-    background: #ffffff;
-  }
-  .coolinput input[type=password].input:focus {
-    outline: none;
-  }
+  width: 100px;
+  margin-bottom: 20px;
+}
+.loginWrapper {
+  display: flex;
+  align-items: center;
+  height: 100vh;
+}
+.loginRight {
+  flex: 1;
+  height: 100vh;
+  background: url("../../../Images/cover.avif");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginRightContent {
+  width: 60%;
+  height: 50%;
+  padding: 80px 30px;
+  background-color: rgba(248, 248, 248, 0.963);
+  border-radius: 4px;
+}
+
+.loginRightContent p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 20px;
+  color: #7d5ffe;
+  margin-bottom: 15px;
+}
+
+.loginRightContent h6 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 50px;
+  line-height: 50px;
+  color: #7d5ffe;
+  margin-bottom: 15px;
+}
+
+.loginLeft {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginLeftContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginLeftInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.loginLeftInfo img {
+  width: 100px;
+  height: 100%;
+  margin-bottom: 15px;
+}
+
+.loginLeftTitle {
+  display: flex;
+  flex-direction: column;
+}
+
+.loginLeftTitle h6 {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 20px;
+  margin-bottom: 20px;
+  color: var(--black);
+}
+
+.loginLeftTitle p {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 26px;
+  line-height: 20px;
+  color: #7d5ffe;
+  margin-bottom: 1rem;
+}
+
+.loginLeftInput {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  background-color: #7d5ffe;
+  color: #fff;
+  cursor: pointer;
+  margin-bottom: 20px;
+  transition: background-color 0.3s;
+}
+
+.dontHaveAccount {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 30px;
+  color: black;
+  margin-bottom: 20px;
+  padding-left: 60px;
+}
+
+.dontHaveAccount span {
+  color: #7d5ffe;
+  cursor: pointer;
+}
+.coolinput {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.coolinput label.text {
+  font-size: 0.95rem;
+  color: #818cf8;
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 7px;
+  padding: 0 3px;
+  background: #ffffff;
+  width: fit-content;
+}
+
+.coolinput input[type="text"].input {
+  padding: 11px 10px;
+  font-size: 0.75rem;
+  border: 2px #818cf8 solid;
+  border-radius: 5px;
+  background: #ffffff;
+}
+.coolinput label.password {
+  font-size: 0.95rem;
+  color: #818cf8;
+  font-weight: 700;
+  position: relative;
+  top: 0.5rem;
+  margin: 0 0 0 7px;
+  padding: 0 3px;
+  background: #ffffff;
+  width: fit-content;
+}
+
+.coolinput input[type="password"].input {
+  padding: 11px 10px;
+  font-size: 0.75rem;
+  border: 2px #818cf8 solid;
+  border-radius: 5px;
+  background: #ffffff;
+}
+.coolinput input[type="password"].input:focus {
+  outline: none;
+}
