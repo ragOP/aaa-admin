@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast, { Toaster } from 'react-hot-toast';
+import toast, { Toaster } from "react-hot-toast";
 import "./LoginPage.css";
 
 function LoginPage() {
@@ -25,13 +25,13 @@ function LoginPage() {
       console.log("Received response:", response);
 
       if (response.ok) {
-        const {data} = await response.json();
+        const { data } = await response.json();
         console.log("Data received:", data);
 
         localStorage.setItem("token", data?.token);
         // localStorage.setItem("token", JSON.stringify(data?.user));
 
-        console.log(data?.user)
+        console.log(data?.user);
         toast.success("Login successful! Redirecting...", {
           id: loadingToastId,
         });
@@ -54,32 +54,34 @@ function LoginPage() {
 
   return (
     <>
-<Toaster 
- position="top-center"
-   toastOptions={{
-    duration: 6000,          
-    style: {
-      background: '#363636',
-      color: '#fff',
-    },
-  
-  }}
-  />
-        <div className="loginWrapper">
+      <Toaster
+        position="top-center"
+        toastOptions={{
+          duration: 6000,
+          style: {
+            background: "#363636",
+            color: "#fff",
+          },
+        }}
+      />
+      <div className="loginWrapper">
         <div className="loginRight" data-aos="fade-left"></div>
         <div className="loginLeft" data-aos="fade-right">
           <div className="loginLeftContainer">
             <div className="loginLeftInfo">
               <div className="loginLeftTitle">
                 <h6>
-                  Welcome Back to the <b style={{ color: "#7d5ffe" }}>AAA - SWITCHGEAR</b> Panel
+                  Welcome Back to the{" "}
+                  <b style={{ color: "#7d5ffe" }}>AAA - SWITCHGEAR</b> Panel
                 </h6>
                 <p>Login and Get Started!</p>
               </div>
             </div>
             <form onSubmit={handleLogin}>
               <div className="coolinput">
-                <label htmlFor="input" className="text">Username:</label>
+                <label htmlFor="input" className="text">
+                  Username:
+                </label>
                 <input
                   type="text"
                   placeholder="Enter your username*"
@@ -92,7 +94,9 @@ function LoginPage() {
               </div>
 
               <div className="coolinput">
-                <label htmlFor="input" className="text">Password:</label>
+                <label htmlFor="input" className="text">
+                  Password:
+                </label>
                 <input
                   type="password"
                   value={password}
@@ -104,7 +108,11 @@ function LoginPage() {
                 />
               </div>
 
-              <button className="loginBtn" type="submit" style={{ marginTop: "20px" }}>
+              <button
+                className="loginBtn"
+                type="submit"
+                style={{ marginTop: "20px" }}
+              >
                 Login
               </button>
             </form>
