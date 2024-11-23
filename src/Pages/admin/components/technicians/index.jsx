@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { Grid2, Stack, Typography } from "@mui/material";
+import { Button, Grid2, Stack, Typography } from "@mui/material";
 import DataCard from "../../../../components/data_card";
 import DataTable from "../../../../components/data_table";
 import { apiService } from "../../../../utils/backend/apiService";
@@ -9,8 +9,12 @@ import SearchBox from "../../../../components/search_box/SearchBox";
 import { useState, useMemo } from "react";
 import { format } from "date-fns";
 import { customDateFormatting } from "../../../../utils/date/customDateFormatting";
+import { PlusIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router";
 
 const Technicians = () => {
+  const navigate = useNavigate();
+
   const [searchText, setSearchText] = useState("");
 
   const {
@@ -27,6 +31,11 @@ const Technicians = () => {
       return techniciansResponse?.response?.data?.engineer || [];
     },
   });
+
+  const onClickTableItem = (_e, data) => {
+    console.log("data", data);
+    navigate(`/admin/technicians/${data?._id}`);
+  };
 
   const onChangeText = (e) => {
     setSearchText(e.target.value);
@@ -122,12 +131,30 @@ const Technicians = () => {
               Showing {filteredTechnicians.length} technicians
             </Typography>
           </Stack>
-          <Stack sx={{ width: "40%" }}>
+          <Stack
+            direction="row"
+            alignItems="center"
+            sx={{ gap: "1rem", width: "40%" }}
+          >
             <SearchBox
               onChange={onChangeText}
               value={searchText}
               placeholder="Search technicians"
             />
+            <Button
+              variant="contained"
+              startIcon={
+                <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
+              }
+              sx={{
+                whiteSpace: "nowrap",
+                width: "auto",
+                flexShrink: 0,
+                textTransform: "none",
+              }}
+            >
+              Add Technician
+            </Button>
           </Stack>
         </Stack>
 
@@ -143,6 +170,7 @@ const Technicians = () => {
               currentPage: 1,
               totalPages: Math.ceil(filteredTechnicians.length / 10),
             }}
+            onClick={(e, data) => onClickTableItem(e, data)}
             tableSx={{
               scrollbarWidth: "none",
               msOverflowStyle: "none",

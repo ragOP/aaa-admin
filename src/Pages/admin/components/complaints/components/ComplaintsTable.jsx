@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Stack, Typography, Chip } from "@mui/material";
+import { Stack, Typography, Chip, Button } from "@mui/material";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import SearchBox from "../../../../../components/search_box/SearchBox";
 import DataTable from "../../../../../components/data_table";
@@ -9,6 +9,8 @@ import {
   ExclamationTriangleIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 const ComplaintsTable = ({
   complaintsData,
@@ -16,6 +18,8 @@ const ComplaintsTable = ({
   searchText,
   setSearchText,
 }) => {
+  const navigate = useNavigate();
+
   const onChangeText = (e) => {
     setSearchText(e.target.value);
   };
@@ -28,6 +32,11 @@ const ComplaintsTable = ({
         .includes(searchText.toLowerCase())
     );
   }, [complaintsData, searchText]);
+
+  const onClickTableItem = (_e, data) => {
+    console.log("data", data);
+    navigate(`/admin/complaints/${data?._id}`);
+  };
 
   const complaintsTableTitles = [
     { value: "name", label: "Name", align: "left" },
@@ -50,7 +59,7 @@ const ComplaintsTable = ({
       <ActivityAndSeverityComponent value={data?.activity} type="activity" />
     ),
     severity: (data) => (
-      <ActivityAndSeverityComponent value={"medium"} type="severity" />
+      <ActivityAndSeverityComponent value={data.severity} type="severity" />
     ),
     panel: (data) => <Typography>{data?.panelSectionName || "-"}</Typography>,
     address: (data) => <Typography>{data?.siteLocation || "-"}</Typography>,
@@ -84,12 +93,30 @@ const ComplaintsTable = ({
             Showing {filteredComplaints.length || 0} complaints
           </Typography>
         </Stack>
-        <Stack sx={{ width: "40%" }}>
+        <Stack
+          direction="row"
+          alignItems="center"
+          sx={{ gap: "1rem", width: "40%" }}
+        >
           <SearchBox
             onChange={onChangeText}
             value={searchText}
             placeholder="Search complaints"
           />
+          <Button
+            variant="contained"
+            startIcon={
+              <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              width: "auto",
+              flexShrink: 0,
+              textTransform: "none",
+            }}
+          >
+            Add Complaint
+          </Button>
         </Stack>
       </Stack>
 
@@ -105,6 +132,7 @@ const ComplaintsTable = ({
             currentPage: 1,
             totalPages: Math.ceil(filteredComplaints.length / 10),
           }}
+          onClick={(e, data) => onClickTableItem(e, data)}
           tableSx={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

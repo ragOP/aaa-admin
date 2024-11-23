@@ -5,6 +5,7 @@ import SearchBox from "../../../../../components/search_box/SearchBox";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import { customDateFormatting } from "../../../../../utils/date/customDateFormatting";
 import { PlusIcon } from "@heroicons/react/24/outline";
+import { useNavigate } from "react-router";
 
 const ClientsTable = ({
   customersData,
@@ -12,6 +13,8 @@ const ClientsTable = ({
   searchText,
   setSearchText,
 }) => {
+  const navigate = useNavigate();
+
   const onChangeText = (e) => {
     setSearchText(e.target.value);
   };
@@ -24,6 +27,11 @@ const ClientsTable = ({
         .includes(searchText.toLowerCase())
     );
   }, [customersData, searchText]);
+
+  const onClickTableItem = (_e, data) => {
+    console.log("data", data);
+    navigate(`/admin/customers/${data?._id}`);
+  };
 
   const customersTableTitle = [
     { value: "name", label: "Name", align: "left" },
@@ -75,8 +83,15 @@ const ClientsTable = ({
           />
           <Button
             variant="contained"
-            startIcon={<PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />} // Use the icon
-            sx={{ whiteSpace: "nowrap", width: "auto", flexShrink: 0, textTransform: "none" }}
+            startIcon={
+              <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
+            }
+            sx={{
+              whiteSpace: "nowrap",
+              width: "auto",
+              flexShrink: 0,
+              textTransform: "none",
+            }}
           >
             Add Customer
           </Button>
@@ -96,6 +111,7 @@ const ClientsTable = ({
             totalPages: Math.ceil(300 / 10),
             // onChange: onPageChange,
           }}
+          onClick={(e, data) => onClickTableItem(e, data)}
           tableSx={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
