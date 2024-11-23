@@ -1,34 +1,54 @@
-import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLeftEndOnRectangleIcon,
+  BellIcon,
+  UserIcon,
+} from "@heroicons/react/24/outline";
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+
   const handleLogout = () => {
     localStorage.removeItem("token");
-    navigate("/");
+    navigate("/login");
   };
 
   return (
-    <header
-      className="bg-[#fa2929] text-white p-4 flex items-center justify-between h-[70px]  w-full "
-      style={{
-        position: "sticky",
-        top: "0",
-      }}
-    >
-      <h4 className="ml-4">
-        <Link to="/dashboard" className="text-white no-underline">
-          AAA-SWITCHGEAR
-        </Link>{" "}
-      </h4>
-      <nav>
-        <ul className="flex items-center gap-3">
-          <button className="bg-[#fa2929] p-3 text-xl" onClick={handleLogout}>
-            <ArrowRightEndOnRectangleIcon className="h-8 w-8 mr-5" />
+    <header className="bg-white border-b p-4 flex items-center justify-between w-full overflow-hidden">
+      <div className="flex items-center">
+        <h4 className="text-lg  text-gray-800 font-semibold whitespace-nowrap">
+         Good Morning !
+        </h4>
+      </div>
+      <div className="flex items-center space-x-4">
+        <button
+          className="p-2  mb-0  rounded-full bg-slate-100 hover:bg-gray-200 "
+          aria-label="Notifications"
+        >
+          <BellIcon className="h-6 w-6 text-black" />
+        </button>
+
+        {/* Logout Icon */}
+        <button
+          onClick={handleLogout}
+          className="p-2 mb-0 rounded-full bg-slate-100 hover:bg-gray-200 focus:outline-none focus:ring"
+          aria-label="Logout"
+        >
+          <ArrowLeftEndOnRectangleIcon className="h-6 w-6 text-black" />
+        </button>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleLogout}
+            className="p-2 mb-0  rounded-full bg-slate-100 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300"
+            aria-label="Logout"
+          >
+            <UserIcon className="h-6 w-6 text-black" />
           </button>
-        </ul>
-      </nav>
+          <h5 className="text-md font-medium text-gray-800">Rahul</h5>
+        </div>
+      </div>
     </header>
   );
 };

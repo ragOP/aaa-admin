@@ -28,11 +28,9 @@ const AddEngineer = () => {
     }
 
     const token = localStorage.getItem("token");
-    console.log("Token:", token);
     const loadingToastId = toast.loading("Adding Customer. Please wait...");
 
     try {
-      console.log(formData);
       const response = await fetch(
         "https://aaa-backend-ip49.onrender.com/api/admin/addEngineer",
         {

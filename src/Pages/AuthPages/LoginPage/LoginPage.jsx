@@ -2,50 +2,56 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import "./LoginPage.css";
+import { apiService } from "../../../utils/backend/apiService";
+import { endpoints } from "../../../utils/backend/endpoints";
+import { getItem, setItem } from "../../../utils/local_storage";
+import { useMediaQuery } from "@mui/material";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const isSmallScreen = useMediaQuery("(max-width:960px)");
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const loadingToastId = toast.loading("Logging in. Please wait...");
 
     try {
-      const response = await fetch(
-        "https://aaa-backend-ip49.onrender.com/api/admin/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ userName: username, password }),
-        }
-      );
+      const apiResponse = await apiService({
+        method: "POST",
+        endpoint: endpoints?.login,
+        data: {
+          userName: username,
+          password,
+        },
+        removeToken: true,
+      });
 
-      console.log("Received response:", response);
-
-      if (response.ok) {
-        const { data } = await response.json();
-        console.log("Data received:", data);
+      if (
+        apiResponse?.response?.success &&
+        apiResponse?.response?.statusCode === 200
+      ) {
+        const data = await apiResponse?.response?.data;
+        const dataObj = {
+          token: data?.token,
+        };
 
         localStorage.setItem("token", data?.token);
-        // localStorage.setItem("token", JSON.stringify(data?.user));
 
-        console.log(data?.user);
         toast.success("Login successful! Redirecting...", {
           id: loadingToastId,
         });
 
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/admin/dashboard");
         }, 2000);
       } else {
-        const errorMessage = await response.text();
-        console.log("Login failed. Error message:", errorMessage);
+        const errorMessage = await apiResponse?.response?.data?.message;
         toast.error(errorMessage, { id: loadingToastId });
       }
     } catch (error) {
-      console.log("Caught an error:", error.message);
+      console.error("Server Error:", error?.message);
       toast.error("An error occurred during login. Please try again.", {
         id: loadingToastId,
       });
@@ -65,7 +71,9 @@ function LoginPage() {
         }}
       />
       <div className="loginWrapper">
-        <div className="loginRight" data-aos="fade-left"></div>
+        {!isSmallScreen && (
+          <div className="loginRight" data-aos="fade-left"></div>
+        )}
         <div className="loginLeft" data-aos="fade-right">
           <div className="loginLeftContainer">
             <div className="loginLeftInfo">
