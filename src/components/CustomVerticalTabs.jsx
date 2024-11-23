@@ -3,6 +3,7 @@ import { cloneElement } from "react";
 
 const CustomVerticalTabs = ({
   title,
+  logo,
   currentMenu,
   menuLists,
   listSx,
@@ -19,6 +20,7 @@ const CustomVerticalTabs = ({
         ...boxSx,
       }}
     >
+      {logo && <Stack sx={{ padding: "1.5rem 0"}}> {logo}</Stack>}
       {title && (
         <Stack
           sx={{

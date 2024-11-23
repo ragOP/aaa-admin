@@ -7,6 +7,8 @@ import { endpoints } from "../../../../utils/backend/endpoints";
 import TableSkeleton from "../../../../components/skeleton/TableSkeleton";
 import SearchBox from "../../../../components/search_box/SearchBox";
 import { useState, useMemo } from "react";
+import ComplaintsStats from "./components/ComplaintsStats";
+import ComplaintsTable from "./components/ComplaintsTable";
 
 const Complaints = () => {
   const [searchText, setSearchText] = useState("");
@@ -26,39 +28,20 @@ const Complaints = () => {
     },
   });
 
-  const onChangeText = (e) => {
-    setSearchText(e.target.value);
-  };
-
-  // Memoized filtered data
-  const filteredComplaints = useMemo(() => {
-    return complaintsData.filter((complaint) =>
-      Object.values(complaint)
-        .join(" ")
-        .toLowerCase()
-        .includes(searchText.toLowerCase())
-    );
-  }, [complaintsData, searchText]);
-
-  const complaintsTableTitles = [
-    { value: "name", label: "Name", align: "left" },
-    { value: "contact_person", label: "Person", align: "center" },
-    { value: "contact_number", label: "Number", align: "center" },
-    { value: "panel", label: "Panel", align: "center" },
-    { value: "address", label: "Address", align: "center" },
-    { value: "date", label: "Date", align: "center" },
-    { value: "gst", label: "GST", align: "center" },
+  const statsData = [
+    {
+      label: "Total complaints",
+      total_number: complaintsData.length,
+    },
+    {
+      label: "Pending complaints",
+      total_number: 4,
+    },
+    {
+      label: "Completed complaints",
+      total_number: 0,
+    },
   ];
-
-  const complaintsRowMapping = {
-    name: (data) => <Typography>{data?.projectName}</Typography>,
-    contact_person: (data) => <Typography>{data?.contact_person}</Typography>,
-    contact_number: (data) => <Typography>{data?.contact_number}</Typography>,
-    panel: (data) => <Typography>{data?.panelSectionName}</Typography>,
-    address: (data) => <Typography>{data?.siteLocation}</Typography>,
-    date: (data) => <Typography>{data?.date}</Typography>,
-    gst: (data) => <Typography>{data?.gst}</Typography>,
-  };
 
   if (isError) {
     return <Typography>Error loading complaints</Typography>;
@@ -73,89 +56,14 @@ const Complaints = () => {
         overflow: "auto",
       }}
     >
-      <Grid2 container spacing={2}>
-        <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
-          <DataCard
-            info={{
-              label: "Total complaints",
-              total_number: complaintsData.length,
-            }}
-          />
-        </Grid2>
-        <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
-          <DataCard
-            info={{
-              label: "Pending complaints",
-              total_number: "50",
-            }}
-          />
-        </Grid2>
-        <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
-          <DataCard
-            info={{
-              label: "Resolved complaints",
-              total_number: "30",
-            }}
-          />
-        </Grid2>
-      </Grid2>
+      <ComplaintsStats statsData={statsData} />
 
-      <Stack
-        sx={{
-          background: "#fff",
-          padding: "1rem",
-          gap: "0.5rem",
-          borderRadius: "0.75rem",
-          height: "100%",
-          overflow: "auto",
-        }}
-      >
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-        >
-          <Stack>
-            <Typography>
-              Showing {filteredComplaints.length} complaints
-            </Typography>
-          </Stack>
-          <Stack sx={{ width: "40%" }}>
-            <SearchBox
-              onChange={onChangeText}
-              value={searchText}
-              placeholder="Search complaints"
-            />
-          </Stack>
-        </Stack>
-
-        {isLoading ? (
-          <TableSkeleton />
-        ) : !isLoading && filteredComplaints.length > 0 ? (
-          <DataTable
-            data={filteredComplaints}
-            tableHeaderList={complaintsTableTitles}
-            rowData={complaintsRowMapping}
-            pagination={{
-              flag: false,
-              currentPage: 1,
-              totalPages: Math.ceil(filteredComplaints.length / 10),
-            }}
-            tableSx={{
-              scrollbarWidth: "none",
-              msOverflowStyle: "none",
-              "&::-webkit-scrollbar": {
-                width: 0,
-                height: 0,
-              },
-            }}
-          />
-        ) : !isLoading && filteredComplaints.length === 0 ? (
-          <Typography>
-            {searchText === "" ? "No data present" : "No data found"}
-          </Typography>
-        ) : null}
-      </Stack>
+      <ComplaintsTable
+        complaintsData={complaintsData || []}
+        isLoading={isLoading || false}
+        searchText={searchText}
+        setSearchText={setSearchText}
+      />
     </Stack>
   );
 };

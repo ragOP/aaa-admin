@@ -8,6 +8,7 @@ import TableSkeleton from "../../../../components/skeleton/TableSkeleton";
 import SearchBox from "../../../../components/search_box/SearchBox";
 import { useState, useMemo } from "react";
 import { format } from "date-fns";
+import { customDateFormatting } from "../../../../utils/date/customDateFormatting";
 
 const Technicians = () => {
   const [searchText, setSearchText] = useState("");
@@ -51,12 +52,12 @@ const Technicians = () => {
 
   const complaintsRowMapping = {
     name: (data) => <Typography>{data?.name || "-"}</Typography>,
-    username: (data) => <Typography>{data?.username || "-"}</Typography>,
+    username: (data) => <Typography>{data?.userName || "-"}</Typography>,
     employee_id: (data) => <Typography>{data?.employeeId || "-"}</Typography>,
     email: (data) => <Typography>{data?.email || "-"}</Typography>,
     date: (data) => (
       <Typography>
-        {format(data?.createdAt, "dd/MM/yyyy hh:mm a") || "-"}
+        {customDateFormatting({ date: data?.createdAt }) || "-"}
       </Typography>
     ),
   };
@@ -78,7 +79,7 @@ const Technicians = () => {
         <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
           <DataCard
             info={{
-              label: "Total complaints",
+              label: "Total technicians",
               total_number: techniciansData.length,
             }}
           />
@@ -86,15 +87,15 @@ const Technicians = () => {
         <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
           <DataCard
             info={{
-              label: "Pending complaints",
-              total_number: "50",
+              label: "Active technicians",
+              total_number: "10",
             }}
           />
         </Grid2>
         <Grid2 size={{ lg: 4, md: 6, sm: 6, xs: 12 }}>
           <DataCard
             info={{
-              label: "Resolved complaints",
+              label: "Inactive technicians",
               total_number: "30",
             }}
           />
@@ -118,14 +119,14 @@ const Technicians = () => {
         >
           <Stack>
             <Typography>
-              Showing {filteredTechnicians.length} complaints
+              Showing {filteredTechnicians.length} technicians
             </Typography>
           </Stack>
           <Stack sx={{ width: "40%" }}>
             <SearchBox
               onChange={onChangeText}
               value={searchText}
-              placeholder="Search complaints"
+              placeholder="Search technicians"
             />
           </Stack>
         </Stack>

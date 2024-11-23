@@ -12,6 +12,7 @@ import {
   CalendarIcon,
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
+import BrandLogo from "../../svgs/BrandLogo";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -121,7 +122,8 @@ const Admin = () => {
           currentMenu={currentMenu}
           menuLists={menuLists}
           onClick={onClickMenu}
-          title="AAA"
+          // title="AAA"
+          logo={<BrandLogo height={50} width={200} viewBox="0 0 200 100" />}
           boxSx={{
             minWidth: "100%",
             width: "fit-content",

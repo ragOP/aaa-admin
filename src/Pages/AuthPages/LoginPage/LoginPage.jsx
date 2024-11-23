@@ -33,11 +33,9 @@ function LoginPage() {
         apiResponse?.response?.statusCode === 200
       ) {
         const data = await apiResponse?.response?.data;
-        const dataObj = {
-          token: data?.token,
-        };
 
         localStorage.setItem("token", data?.token);
+        localStorage.setItem("username", username);
 
         toast.success("Login successful! Redirecting...", {
           id: loadingToastId,
