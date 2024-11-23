@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
 import toast, { Toaster } from "react-hot-toast";
+import { apiService } from "../../utils/backend/apiService";
 
 const AddCustomer = () => {
   const navigate = useNavigate();
@@ -22,32 +21,24 @@ const AddCustomer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataForRequest = new FormData();
-    for (const key in formData) {
-      formDataForRequest.append(key, formData[key]);
-    }
 
-    const token = localStorage.getItem("token");
     const loadingToastId = toast.loading("Adding Customer. Please wait...");
 
     try {
-      const response = await fetch(
-        "https://aaa-backend-ip49.onrender.com/api/admin/addCustomer",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formDataForRequest,
-        }
-      );
+      console.log(formData);
 
-      if (response.ok) {
+      const response = await apiService({
+        endpoint: "api/admin/addCustomer",
+        method: "POST",
+        data: formData,
+      });
+
+      if (response?.response?.success) {
         toast.success("Customer added successfully", {
           id: loadingToastId,
         });
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/dashboard/customers");
         }, 2000);
       } else {
         const errorMessage = await response.text();
@@ -72,9 +63,7 @@ const AddCustomer = () => {
           },
         }}
       />
-      <Header />
       <div className="flex">
-        <Sidebar />
         <div
           className="max-w-md mx-auto bg-white shadow-lg p-8 mt-10"
           style={{ height: "auto", width: "90%" }}

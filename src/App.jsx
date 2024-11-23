@@ -19,6 +19,8 @@ import PublicRoute from "./components/routes_wrapper/PublicRoute.jsx";
 import ComplaintsDetailsPage from "./Pages/admin/components/complaints/pages/complaint_details_page/index.jsx";
 import TechniciansDetailsPage from "./Pages/admin/components/technicians/pages/technician_details_page/index.jsx";
 import ClientDetailsPage from "./Pages/admin/components/clients/pages/index.jsx";
+import AddCustomer from "./Pages/AddCustomer/AddCustomer.jsx";
+import AddEngineer from "./Pages/AddEngineer/AddEngineer.jsx";
 
 function App() {
   return (
@@ -44,10 +46,12 @@ function App() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="customers" element={<Clients />} />
           <Route path="customers/:id" element={<ClientDetailsPage />} />
+          <Route path="customers/create" element={<AddCustomer />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="complaints/:id" element={<ComplaintsDetailsPage />} />
           <Route path="projects" element={<Projects />} />
           <Route path="technicians" element={<Technicians />} />
+          <Route path="technicians/create" element={<AddEngineer />} />
           <Route path="technicians/:id" element={<TechniciansDetailsPage />} />
           <Route path="warranty" element={<Warranty />} />
           <Route path="amc" element={<Amc />} />

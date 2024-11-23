@@ -19,6 +19,10 @@ const ClientsTable = ({
     setSearchText(e.target.value);
   };
 
+  const onNavigateToPage = () => {
+    navigate(`/admin/customers/create`);
+  };
+
   const filteredCustomers = useMemo(() => {
     return customersData.filter((complaint) =>
       Object.values(complaint)
@@ -82,6 +86,7 @@ const ClientsTable = ({
             placeholder="Search customer"
           />
           <Button
+            onClick={onNavigateToPage}
             variant="contained"
             startIcon={
               <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />

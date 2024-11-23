@@ -32,6 +32,10 @@ const Technicians = () => {
     },
   });
 
+  const onNavigateToPage = () => {
+    navigate(`/admin/technicians/create`);
+  };
+
   const onClickTableItem = (_e, data) => {
     console.log("data", data);
     navigate(`/admin/technicians/${data?._id}`);
@@ -142,6 +146,7 @@ const Technicians = () => {
               placeholder="Search technicians"
             />
             <Button
+              onClick={onNavigateToPage}
               variant="contained"
               startIcon={
                 <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />

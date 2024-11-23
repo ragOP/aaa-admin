@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
-import Header from "../../components/Header";
 import toast, { Toaster } from "react-hot-toast";
+import { apiService } from "../../utils/backend/apiService";
 
 const AddEngineer = () => {
   const navigate = useNavigate();
@@ -27,27 +26,21 @@ const AddEngineer = () => {
       formDataForRequest.append(key, formData[key]);
     }
 
-    const token = localStorage.getItem("token");
-    const loadingToastId = toast.loading("Adding Customer. Please wait...");
+    const loadingToastId = toast.loading("Adding Technician. Please wait...");
 
     try {
-      const response = await fetch(
-        "https://aaa-backend-ip49.onrender.com/api/admin/addEngineer",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formDataForRequest,
-        }
-      );
+      const response = await apiService({
+        endpoint: "api/admin/addEngineer",
+        method: "POST",
+        data: formData,
+      });
 
-      if (response.ok) {
-        toast.success("Engineer added successfully", {
+      if (response?.response?.success) {
+        toast.success("Technican added successfully", {
           id: loadingToastId,
         });
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/admin/technicians");
         }, 2000);
       } else {
         const errorMessage = await response.text();
@@ -72,9 +65,7 @@ const AddEngineer = () => {
           },
         }}
       />
-      <Header />
       <div className="flex">
-        <Sidebar />
         <div
           className="max-w-md mx-auto bg-white shadow-lg p-8 mt-10"
           style={{ height: "auto", width: "90%" }}
@@ -156,6 +147,25 @@ const AddEngineer = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                 placeholder="Enter email"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="employeeId"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Enter Employee Id
+              </label>
+              <input
+                type="employeeId"
+                id="employeeId"
+                name="employeeId"
+                value={formData.employeeId}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter Employee Id"
                 required
               />
             </div>
