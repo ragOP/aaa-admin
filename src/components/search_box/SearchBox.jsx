@@ -46,18 +46,18 @@ const SearchBox = ({
         "& .MuiOutlinedInput-root": {
           backgroundColor: bgColor || "#fff",
           borderRadius: "0.5rem",
-          border: "none", // Prevents external borders
+          border: "none",
         },
         "& .MuiOutlinedInput-notchedOutline": {
-          border: "none", // Removes Material-UI's default outline
+          border: "none", 
         },
         "& .MuiInputBase-root": {
-          border: "none", // Removes any internal input borders
+          border: "none", 
         },
         "& input": {
-          border: "none", // Removes border inside input
+          border: "none", 
         },
-        ...sx, // Allows additional customization
+        ...sx, 
       }}
       InputProps={{
         startAdornment: (
@@ -79,10 +79,11 @@ const SearchBox = ({
           </>
         ),
         style: {
-          backgroundColor: bgColor || "#fff", // Matches the outer styling
-          borderRadius: "0.627rem", // Custom border-radius
-          boxShadow: "none", // No shadow for the input area
-          border: "none", // Ensures no inline border
+          backgroundColor: bgColor || "#fff",
+          height: "2.4rem",
+          borderRadius: "0.627rem",
+          boxShadow: "none",
+          border: "none",
         },
       }}
       {...props}

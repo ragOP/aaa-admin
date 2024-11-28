@@ -19,6 +19,7 @@ import { apiService } from "../../../../../../utils/backend/apiService";
 import { endpoints } from "../../../../../../utils/backend/endpoints";
 import { customDateFormatting } from "../../../../../../utils/date/customDateFormatting";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
 
 const ComplaintsDetailsPage = () => {
   const { id } = useParams(); // Fetching complaint ID from the route
@@ -45,7 +46,7 @@ const ComplaintsDetailsPage = () => {
     setPreviewImage(null); // Close the image preview modal
   };
 
-  if (isLoading) return <Typography>Loading complaint details...</Typography>;
+  if (isLoading) return <BoxCircularLoader sx={{ height: "100%" }} />;
   if (isError || !data)
     return <Typography>Failed to load complaint details.</Typography>;
 

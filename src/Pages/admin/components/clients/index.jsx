@@ -24,7 +24,22 @@ const Customers = () => {
     },
   });
 
-  const statsData = [];
+  const statsData = [
+    {
+      label: "Total Customers",
+      total_number: customersData?.length,
+    },
+    {
+      label: "Active Customers",
+      total_number:
+        customersData?.filter((customer) => customer?.active)?.length || 0,
+    },
+    {
+      label: "Inactive Customers",
+      total_number:
+        customersData?.filter((customer) => !customer?.active)?.length || 0,
+    },
+  ];
 
   if (isError) {
     return <Typography>Error loading customers</Typography>;
@@ -34,7 +49,7 @@ const Customers = () => {
     <Stack sx={{ gap: "1rem", padding: "1rem", mb: "1rem" }}>
       <h1 className="text-lg font-medium">Customers</h1>
 
-      <ClientsStats statsData={statsData} />
+      <ClientsStats statsData={statsData} isLoading={isLoading} />
 
       <ClientsTable
         customersData={customersData || []}

@@ -5,6 +5,7 @@ import { Stack, Typography, Card, CardContent, Grid2 } from "@mui/material";
 import { apiService } from "../../../../../../utils/backend/apiService";
 import { endpoints } from "../../../../../../utils/backend/endpoints";
 import { customDateFormatting } from "../../../../../../utils/date/customDateFormatting";
+import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
 
 const TechniciansDetailsPage = () => {
   const { id } = useParams(); // Fetching technician ID from the route
@@ -20,7 +21,7 @@ const TechniciansDetailsPage = () => {
     enabled: !!id, // Only fetch if technician ID is available
   });
 
-  if (isLoading) return <Typography>Loading technician details...</Typography>;
+  if (isLoading) return <BoxCircularLoader sx={{ height: "100%" }} />;
   if (isError || !data)
     return <Typography>Failed to load technician details.</Typography>;
 

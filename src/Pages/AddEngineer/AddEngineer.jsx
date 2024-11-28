@@ -70,7 +70,7 @@ const AddEngineer = () => {
           className="max-w-md mx-auto bg-white shadow-lg p-8 mt-10"
           style={{ height: "auto", width: "90%" }}
         >
-          <h2 className="text-2xl font-bold mb-6 text-center">Add Engineer</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">Add Technician</h2>
 
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -176,7 +176,7 @@ const AddEngineer = () => {
                 type="submit"
                 className="bg-[#fa2929] text-white px-4 py-2 rounded-md hover:bg-[#e62828] focus:outline-none"
               >
-                Add Engineer
+                Add Technician
               </button>
             </div>
           </form>

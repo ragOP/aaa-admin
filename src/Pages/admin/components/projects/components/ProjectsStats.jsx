@@ -2,7 +2,7 @@ import { Grid2 } from "@mui/material";
 import DataCard from "../../../../../components/data_card";
 import StatsCardSkeleton from "../../../../../components/skeleton/StatsCardSkeleton";
 
-const ComplaintsStats = ({ statsData, isLoading }) => {
+const ProjectsStats = ({ statsData, isLoading }) => {
   return (
     <Grid2 container spacing={2}>
       {isLoading
@@ -25,4 +25,4 @@ const ComplaintsStats = ({ statsData, isLoading }) => {
   );
 };
 
-export default ComplaintsStats;
+export default ProjectsStats;

@@ -15,7 +15,7 @@ function Sidebar() {
         to="/dashboard/addEngineer"
         className="text-white no-underline mb-4 flex items-center hover:bg-[#d61f1f] p-2 rounded"
       >
-        <UserGroupIcon className="h-6 w-6 mr-2" /> Add Engineer
+        <UserGroupIcon className="h-6 w-6 mr-2" /> Add Technician
       </Link>
     </div>
   );

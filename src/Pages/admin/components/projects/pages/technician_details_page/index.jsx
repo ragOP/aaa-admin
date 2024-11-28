@@ -2,39 +2,40 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Stack, Typography, Card, CardContent, Grid2 } from "@mui/material";
-import { apiService } from "../../../../../utils/backend/apiService";
-import { endpoints } from "../../../../../utils/backend/endpoints";
-import { customDateFormatting } from "../../../../../utils/date/customDateFormatting";
-import BoxCircularLoader from "../../../../../components/loaders/BoxCircularLoader";
+import { apiService } from "../../../../../../utils/backend/apiService";
+import { endpoints } from "../../../../../../utils/backend/endpoints";
+import { customDateFormatting } from "../../../../../../utils/date/customDateFormatting";
+import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
 
-const ClientDetailsPage = () => {
-  const { id } = useParams(); // Fetching client ID from the route
+const ProjectsDetailsPage = () => {
+  const { id } = useParams(); 
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["client", id],
+    queryKey: ["project", id],
     queryFn: async () => {
       const response = await apiService({
-        endpoint: `api/admin/get-customer/${id}`,
+        endpoint: `api/admin/get-project/${id}`,
         method: "GET",
       });
-      return response?.response?.data?.customer || null;
+      return response?.response?.data?.project || null;
     },
-    enabled: !!id,
+    enabled: !!id, 
   });
 
   if (isLoading) return <BoxCircularLoader sx={{ height: "100%" }} />;
   if (isError || !data)
-    return <Typography>Failed to load client details.</Typography>;
+    return <Typography>Failed to load project details.</Typography>;
 
   return (
     <Stack
       spacing={3}
       sx={{ padding: "2rem", background: "#f4f6f8", minHeight: "100vh" }}
     >
-      {/* Client Basic Details */}
+      {/* Project Basic Details */}
       <Card>
         <CardContent>
           <Typography variant="h5" gutterBottom>
-            {data.name || "Client Details"}
+            {data.name || "Project Details"}
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Username: {data.userName || "-"}
@@ -43,23 +44,10 @@ const ClientDetailsPage = () => {
             Email: {data.email || "-"}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Address: {data.address || "-"}
+            Employee ID: {data.employeeId || "-"}
           </Typography>
         </CardContent>
       </Card>
-
-      {/* Contact Details */}
-      {(data.contactPerson || data.gst) && (
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
-              Contact Information
-            </Typography>
-            <Typography>Contact Person: {data.contactPerson || "-"}</Typography>
-            <Typography>GST: {data.gst || "-"}</Typography>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Account Dates */}
 
@@ -69,9 +57,11 @@ const ClientDetailsPage = () => {
           <Typography variant="h6" gutterBottom>
             Additional Information
           </Typography>
+
           <Typography>Database ID: {data._id || "N/A"}</Typography>
+
           <Typography variant="h6" gutterBottom>
-            Account Dates
+            Account Details
           </Typography>
           <Typography>
             Created At:{" "}
@@ -91,4 +81,4 @@ const ClientDetailsPage = () => {
   );
 };
 
-export default ClientDetailsPage;
+export default ProjectsDetailsPage;

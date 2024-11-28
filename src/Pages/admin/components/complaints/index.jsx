@@ -1,12 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { Grid2, Stack, Typography } from "@mui/material";
-import DataCard from "../../../../components/data_card";
-import DataTable from "../../../../components/data_table";
+import { Stack, Typography } from "@mui/material";
 import { apiService } from "../../../../utils/backend/apiService";
 import { endpoints } from "../../../../utils/backend/endpoints";
-import TableSkeleton from "../../../../components/skeleton/TableSkeleton";
-import SearchBox from "../../../../components/search_box/SearchBox";
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import ComplaintsStats from "./components/ComplaintsStats";
 import ComplaintsTable from "./components/ComplaintsTable";
 
@@ -30,16 +26,20 @@ const Complaints = () => {
 
   const statsData = [
     {
-      label: "Total complaints",
-      total_number: complaintsData.length,
+      label: "Total Complaints",
+      total_number: complaintsData?.length,
     },
     {
-      label: "Pending complaints",
-      total_number: 4,
+      label: "Pending Complaints",
+      total_number:
+        complaintsData?.filter((complaint) => complaint?.activity === "Pending")
+          ?.length || 0,
     },
     {
-      label: "Completed complaints",
-      total_number: 0,
+      label: "High Severity Complaints",
+      total_number:
+        complaintsData?.filter((complaint) => complaint?.severity === "High")
+          ?.length || 0,
     },
   ];
 
@@ -56,7 +56,7 @@ const Complaints = () => {
         overflow: "auto",
       }}
     >
-      <ComplaintsStats statsData={statsData} />
+      <ComplaintsStats statsData={statsData} isLoading={isLoading} />
 
       <ComplaintsTable
         complaintsData={complaintsData || []}
