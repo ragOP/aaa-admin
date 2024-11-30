@@ -1,11 +1,16 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Chip, Stack, Tooltip, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import { customDateFormatting } from "../../../../../utils/date/customDateFormatting";
 import { useMemo } from "react";
 import DataTable from "../../../../../components/data_table";
 import SearchBox from "../../../../../components/search_box/SearchBox";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import {
+  PlusIcon,
+  ClockIcon,
+  PlayCircleIcon,
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 const ProjectsTable = ({
   projectsData,
@@ -38,21 +43,33 @@ const ProjectsTable = ({
   }, [projectsData, searchText]);
 
   const complaintsTableTitles = [
-    { value: "name", label: "Name", align: "left" },
-    { value: "username", label: "Username", align: "center" },
-    { value: "employee_id", label: "Employee Id", align: "center" },
-    { value: "email", label: "Email", align: "center" },
+    { value: "title", label: "Title", align: "left" },
+    { value: "customer_name", label: "Customer Name", align: "center" },
+    { value: "total_panels", label: "Total Panels", align: "center" },
+    { value: "activity", label: "Acitivity", align: "center" },
+    { value: "site_location", label: "Site Location", align: "center" },
     { value: "date", label: "Date", align: "center" },
+    { value: "updated_at", label: "Updated at", align: "center" },
   ];
 
   const complaintsRowMapping = {
-    name: (data) => <Typography>{data?.name || "-"}</Typography>,
-    username: (data) => <Typography>{data?.userName || "-"}</Typography>,
-    employee_id: (data) => <Typography>{data?.employeeId || "-"}</Typography>,
-    email: (data) => <Typography>{data?.email || "-"}</Typography>,
+    title: (data) => <Typography>{data?.title || "-"}</Typography>,
+    customer_name: (data) => (
+      <Typography>{data?.customerId?.name || "-"}</Typography>
+    ),
+    total_panels: (data) => <ProjectsPanels data={data?.panels} />,
+    activity: (data) => <ProjectActivityChip activity={data?.activity} />,
+    site_location: (data) => (
+      <Typography>{data?.siteLocation || "-"}</Typography>
+    ),
     date: (data) => (
       <Typography>
         {customDateFormatting({ date: data?.createdAt }) || "-"}
+      </Typography>
+    ),
+    updated_at: (data) => (
+      <Typography>
+        {customDateFormatting({ date: data?.updatedAt }) || "-"}
       </Typography>
     ),
   };
@@ -134,3 +151,80 @@ const ProjectsTable = ({
 };
 
 export default ProjectsTable;
+
+export const ProjectsPanels = ({ data }) => {
+  const MAX_VISIBLE_PANELS = 2;
+
+  const visiblePanels = data.slice(0, MAX_VISIBLE_PANELS);
+  const hiddenPanels = data.slice(MAX_VISIBLE_PANELS);
+
+  if (data?.length <= 0) {
+    return <Typography>-</Typography>;
+  }
+
+  return (
+    <Stack direction="row" spacing={1}>
+      {/* Render visible panels as chips */}
+      {visiblePanels.map((panel, index) => (
+        <Chip key={index} label={panel} variant="outlined" />
+      ))}
+
+      {/* Render "+X" chip with a tooltip for hidden panels */}
+      {hiddenPanels.length > 0 && (
+        <Tooltip title={hiddenPanels.join(", ")}>
+          <Chip
+            label={`+${hiddenPanels.length}`}
+            variant="outlined"
+            sx={{ cursor: "pointer" }}
+          />
+        </Tooltip>
+      )}
+    </Stack>
+  );
+};
+
+export const ProjectActivityChip = ({ activity }) => {
+  console.log(">>> activity", activity);
+  const getChipProps = () => {
+    switch (activity) {
+      case "Pending":
+        return {
+          label: "Pending",
+          icon: <ClockIcon className="w-5 h-5 text-gray-500" />,
+          color: "default",
+          style: { backgroundColor: "#f3f4f6", color: "#374151" }, // Gray background
+        };
+      case "Ongoing":
+        return {
+          label: "Ongoing",
+          icon: <PlayCircleIcon className="w-5 h-5 text-blue-500" />,
+          color: "primary",
+          style: { backgroundColor: "#e0f2fe", color: "#0284c7" }, // Light blue background
+        };
+      case "Completed":
+        return {
+          label: "Completed",
+          icon: <CheckCircleIcon className="w-5 h-5 text-green-500" />,
+          color: "success",
+          style: { backgroundColor: "#d1fae5", color: "#065f46" }, // Light green background
+        };
+      default:
+        return {
+          label: "Unknown",
+          icon: <ClockIcon className="w-5 h-5 text-gray-500" />,
+          color: "default",
+          style: { backgroundColor: "#f3f4f6", color: "#374151" },
+        };
+    }
+  };
+
+  const chipProps = getChipProps();
+
+  return (
+    <Chip
+      icon={chipProps.icon}
+      label={chipProps.label}
+      style={chipProps.style}
+    />
+  );
+};

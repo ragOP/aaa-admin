@@ -21,7 +21,8 @@ import TechniciansDetailsPage from "./Pages/admin/components/technicians/pages/t
 import ClientDetailsPage from "./Pages/admin/components/clients/pages/index.jsx";
 import AddCustomer from "./Pages/AddCustomer/AddCustomer.jsx";
 import AddEngineer from "./Pages/AddEngineer/AddEngineer.jsx";
-import ProjectsDetailsPage from "./Pages/admin/components/projects/pages/technician_details_page/index.jsx";
+import AddProject from "./Pages/admin/components/projects/pages/add_project/index.jsx";
+import ProjectsDetailsPage from "./Pages/admin/components/projects/pages/project_details_page/index.jsx";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="complaints/:id" element={<ComplaintsDetailsPage />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectsDetailsPage />} />
+          <Route path="projects/create" element={<AddProject />} />
           <Route path="technicians" element={<Technicians />} />
           <Route path="technicians/create" element={<AddEngineer />} />
           <Route path="technicians/:id" element={<TechniciansDetailsPage />} />

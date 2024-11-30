@@ -13,6 +13,7 @@ const Complaints = () => {
     data: complaintsData = [],
     isLoading,
     isError,
+    refetch
   } = useQuery({
     queryKey: ["complaints"],
     queryFn: async () => {
@@ -63,6 +64,7 @@ const Complaints = () => {
         isLoading={isLoading || false}
         searchText={searchText}
         setSearchText={setSearchText}
+        refetch={refetch}
       />
     </Stack>
   );

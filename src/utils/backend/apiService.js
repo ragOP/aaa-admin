@@ -1,5 +1,4 @@
 import axios from "axios";
-import { getItem } from "../local_storage";
 import { BACKEND_URL } from ".";
 
 export const apiService = async ({

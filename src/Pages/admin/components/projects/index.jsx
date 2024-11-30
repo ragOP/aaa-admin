@@ -25,17 +25,17 @@ const Projects = () => {
   });
 
   const statsData = [
-    { label: "Total Projects", total_number: projectsData?.total || 0 },
-    {
-      label: "Active Projects",
-      total_number:
-        projectsData?.filter((project) => project?.active)?.length || 0,
-    },
-    {
-      label: "Inactive Projects",
-      total_number:
-        projectsData?.filter((project) => !project?.active)?.length || 0,
-    },
+    { label: "Total Projects", total_number: projectsData?.length || 0 },
+    // {
+    //   label: "Active Projects",
+    //   total_number:
+    //     projectsData?.filter((project) => project?.active)?.length || 0,
+    // },
+    // {
+    //   label: "Inactive Projects",
+    //   total_number:
+    //     projectsData?.filter((project) => !project?.active)?.length || 0,
+    // },
   ];
 
   if (isError) {

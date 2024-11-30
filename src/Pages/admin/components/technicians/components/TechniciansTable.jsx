@@ -41,6 +41,7 @@ const TechniciansTable = ({
     { value: "name", label: "Name", align: "left" },
     { value: "username", label: "Username", align: "center" },
     { value: "employee_id", label: "Employee Id", align: "center" },
+    { value: "phone_number", label: "Phone Number", align: "center" },
     { value: "email", label: "Email", align: "center" },
     { value: "date", label: "Date", align: "center" },
   ];
@@ -49,6 +50,7 @@ const TechniciansTable = ({
     name: (data) => <Typography>{data?.name || "-"}</Typography>,
     username: (data) => <Typography>{data?.userName || "-"}</Typography>,
     employee_id: (data) => <Typography>{data?.employeeId || "-"}</Typography>,
+    phone_number: (data) => <Typography>{data?.phoneNumber || "-"}</Typography>,
     email: (data) => <Typography>{data?.email || "-"}</Typography>,
     date: (data) => (
       <Typography>

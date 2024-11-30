@@ -16,7 +16,7 @@ const DashboardStats = ({ stats , isLoading}) => {
     },
     {
       label: "Total Technicians",
-      total_number: stats?.totalTechnicians || 0,
+      total_number: stats?.totalEngineers || 0,
     },
   ];
 

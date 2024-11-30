@@ -10,6 +10,7 @@ const AddEngineer = () => {
     password: "",
     name: "",
     email: "",
+    phoneNumber: "",
   });
 
   const handleChange = (e) => {
@@ -70,7 +71,9 @@ const AddEngineer = () => {
           className="max-w-md mx-auto bg-white shadow-lg p-8 mt-10"
           style={{ height: "auto", width: "90%" }}
         >
-          <h2 className="text-2xl font-bold mb-6 text-center">Add Technician</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">
+            Add Technician
+          </h2>
 
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
@@ -166,6 +169,25 @@ const AddEngineer = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                 placeholder="Enter Employee Id"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="phoneNumber"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Enter phone number
+              </label>
+              <input
+                type="phoneNumber"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter Phone number"
                 required
               />
             </div>

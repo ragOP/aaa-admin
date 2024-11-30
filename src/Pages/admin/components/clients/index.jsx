@@ -29,16 +29,16 @@ const Customers = () => {
       label: "Total Customers",
       total_number: customersData?.length,
     },
-    {
-      label: "Active Customers",
-      total_number:
-        customersData?.filter((customer) => customer?.active)?.length || 0,
-    },
-    {
-      label: "Inactive Customers",
-      total_number:
-        customersData?.filter((customer) => !customer?.active)?.length || 0,
-    },
+    // {
+    //   label: "Active Customers",
+    //   total_number:
+    //     customersData?.filter((customer) => customer?.active)?.length || 0,
+    // },
+    // {
+    //   label: "Inactive Customers",
+    //   total_number:
+    //     customersData?.filter((customer) => !customer?.active)?.length || 0,
+    // },
   ];
 
   if (isError) {

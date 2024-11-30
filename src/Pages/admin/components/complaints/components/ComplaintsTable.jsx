@@ -1,5 +1,15 @@
-import React, { useMemo } from "react";
-import { Stack, Typography, Chip, Button } from "@mui/material";
+import React, { useMemo, useState } from "react";
+import {
+  Stack,
+  Typography,
+  Chip,
+  Button,
+  Dialog,
+  IconButton,
+  Divider,
+  Autocomplete,
+  TextField,
+} from "@mui/material";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import SearchBox from "../../../../../components/search_box/SearchBox";
 import DataTable from "../../../../../components/data_table";
@@ -10,15 +20,52 @@ import {
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router";
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { apiService } from "../../../../../utils/backend/apiService";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { endpoints } from "../../../../../utils/backend/endpoints";
+import toast from "react-hot-toast";
 
 const ComplaintsTable = ({
   complaintsData,
   isLoading,
   searchText,
   setSearchText,
+  refetch,
 }) => {
   const navigate = useNavigate();
+  const [selectedComplaint, setSelectedComplaint] = useState(null);
+
+  const {
+    data: techniciansData = [],
+    isLoading: isTechniciansLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["technicians"],
+    queryFn: async () => {
+      const techniciansResponse = await apiService({
+        endpoint: endpoints.technician,
+        method: "GET",
+      });
+      return techniciansResponse?.response?.data?.engineer || [];
+    },
+  });
+
+  const [openSelect, setOpenSelect] = useState(false);
+
+  const onOpenSelect = (e, data) => {
+    e.stopPropagation();
+    setOpenSelect(true);
+    setSelectedComplaint(data);
+  };
+
+  const onCloseSelect = (e) => {
+    e.stopPropagation();
+    setOpenSelect(false);
+    setSelectedComplaint(null);
+  };
+
+  const onEditTechnician = () => {};
 
   const onChangeText = (e) => {
     setSearchText(e.target.value);
@@ -48,6 +95,7 @@ const ComplaintsTable = ({
     { value: "date", label: "Date", align: "center" },
     { value: "last_activity", label: "Last activity", align: "center" },
     { value: "status_code", label: "Code", align: "center" },
+    { value: "actions", label: "Actions", align: "center" },
   ];
 
   const complaintsRowMapping = {
@@ -74,36 +122,50 @@ const ComplaintsTable = ({
       </Typography>
     ),
     status_code: (data) => <Typography>{data?.statusCode || "-"}</Typography>,
+    actions: (data) => (
+      <Button
+        variant="contained"
+        onClick={(e) => onOpenSelect(e, data)}
+        sx={{ textTransform: "none", whiteSpace: "nowrap" }}
+      >
+        {data?.technician ? "Edit Technician" : "Add Technician"}
+      </Button>
+    ),
   };
 
   return (
-    <Stack
-      sx={{
-        background: "#fff",
-        padding: "1rem",
-        gap: "0.5rem",
-        borderRadius: "0.75rem",
-        height: "100%",
-        overflow: "auto",
-      }}
-    >
-      <Stack direction="row" alignItems="center" justifyContent="space-between">
-        <Stack>
-          <Typography>
-            Showing {filteredComplaints.length || 0} complaints
-          </Typography>
-        </Stack>
+    <>
+      <Stack
+        sx={{
+          background: "#fff",
+          padding: "1rem",
+          gap: "0.5rem",
+          borderRadius: "0.75rem",
+          height: "100%",
+          overflow: "auto",
+        }}
+      >
         <Stack
           direction="row"
           alignItems="center"
-          sx={{ gap: "1rem", width: "40%" }}
+          justifyContent="space-between"
         >
-          <SearchBox
-            onChange={onChangeText}
-            value={searchText}
-            placeholder="Search complaints"
-          />
-          <Button
+          <Stack>
+            <Typography>
+              Showing {filteredComplaints.length || 0} complaints
+            </Typography>
+          </Stack>
+          <Stack
+            direction="row"
+            alignItems="center"
+            sx={{ gap: "1rem", width: "40%" }}
+          >
+            <SearchBox
+              onChange={onChangeText}
+              value={searchText}
+              placeholder="Search complaints"
+            />
+            {/* <Button
             variant="contained"
             startIcon={
               <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
@@ -116,38 +178,59 @@ const ComplaintsTable = ({
             }}
           >
             Add Complaint
-          </Button>
+          </Button> */}
+          </Stack>
         </Stack>
+
+        {isLoading ? (
+          <TableSkeleton />
+        ) : filteredComplaints.length > 0 ? (
+          <DataTable
+            data={filteredComplaints}
+            tableHeaderList={complaintsTableTitles}
+            rowData={complaintsRowMapping}
+            pagination={{
+              flag: false,
+              currentPage: 1,
+              totalPages: Math.ceil(filteredComplaints.length / 10),
+            }}
+            onClick={(e, data) => onClickTableItem(e, data)}
+            tableSx={{
+              scrollbarWidth: "none",
+              msOverflowStyle: "none",
+              "&::-webkit-scrollbar": {
+                width: 0,
+                height: 0,
+              },
+            }}
+          />
+        ) : (
+          <Typography>
+            {searchText === "" ? "No data present" : "No data found"}
+          </Typography>
+        )}
       </Stack>
 
-      {isLoading ? (
-        <TableSkeleton />
-      ) : filteredComplaints.length > 0 ? (
-        <DataTable
-          data={filteredComplaints}
-          tableHeaderList={complaintsTableTitles}
-          rowData={complaintsRowMapping}
-          pagination={{
-            flag: false,
-            currentPage: 1,
-            totalPages: Math.ceil(filteredComplaints.length / 10),
-          }}
-          onClick={(e, data) => onClickTableItem(e, data)}
-          tableSx={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            "&::-webkit-scrollbar": {
-              width: 0,
-              height: 0,
-            },
-          }}
+      <Dialog
+        maxWidth="sm"
+        fullWidth
+        open={openSelect}
+        onClose={onCloseSelect}
+        PaperProps={{
+          sx: {
+            borderRadius: "0.75rem",
+          },
+        }}
+      >
+        <SelectTechnicianBox
+          onCloseSelect={onCloseSelect}
+          techniciansData={techniciansData}
+          setOpenSelect={setOpenSelect}
+          selectedComplaint={selectedComplaint}
+          refetch={refetch}
         />
-      ) : (
-        <Typography>
-          {searchText === "" ? "No data present" : "No data found"}
-        </Typography>
-      )}
-    </Stack>
+      </Dialog>
+    </>
   );
 };
 
@@ -244,5 +327,113 @@ export const ActivityAndSeverityComponent = ({ value, type }) => {
         },
       }}
     />
+  );
+};
+
+export const SelectTechnicianBox = ({
+  onCloseSelect,
+  techniciansData,
+  setOpenSelect,
+  selectedComplaint,
+  refetch,
+}) => {
+  const [selectedTechnician, setSelectedTechnician] = useState(null);
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: async (technicianId) => {
+      const response = await apiService({
+        endpoint: `${endpoints.patchTechnician}/${selectedComplaint?._id}`,
+        method: "PATCH",
+        data: { technicianId },
+      });
+
+      return response;
+    },
+    onSuccess: () => {
+      toast.success("Technician assigned successfully!");
+      refetch();
+      setOpenSelect(false);
+    },
+    onError: (error) => {
+      toast.error("Failed to assign technician. Please try again.");
+      console.error(error);
+    },
+  });
+
+  const onSelectTechnician = (technician) => {
+    console.log("Selected Technician:", technician);
+    setSelectedTechnician(technician);
+  };
+
+  const onSaveTechnician = () => {
+    if (!selectedTechnician) {
+      toast.error("Please select a technician!");
+      return;
+    }
+    mutate(selectedTechnician._id);
+  };
+
+  console.log(">> Technicians Data:", techniciansData, selectedTechnician);
+
+  return (
+    <Stack sx={{ borderRadius: "0.625rem" }}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="space-between"
+        sx={{ padding: "1rem 1.5rem" }}
+      >
+        <Typography sx={{ fontWeight: 600 }}>Select Technician</Typography>
+        <IconButton onClick={onCloseSelect} sx={{ width: "fit-content" }}>
+          <XMarkIcon
+            style={{
+              color: "#000",
+              height: "1.25rem",
+              width: "1.25rem",
+              strokeWidth: 2.5,
+            }}
+          />
+        </IconButton>
+      </Stack>
+
+      <Stack sx={{ padding: "1rem" }}>
+        <Autocomplete
+          disableClearable
+          options={techniciansData}
+          value={selectedTechnician}
+          getOptionLabel={(option) => option.name || ""}
+          onChange={(_, value) => onSelectTechnician(value)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              placeholder="Search Technician"
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  backgroundColor: "#fff",
+                  borderRadius: "0.5rem",
+                },
+                "& input": {
+                  border: "none",
+                },
+              }}
+            />
+          )}
+          fullWidth
+        />
+      </Stack>
+
+      <Stack sx={{ padding: "1rem" }}>
+        <Button
+          onClick={onSaveTechnician}
+          variant="contained"
+          disabled={isLoading || !selectedTechnician}
+          sx={{
+            position: "relative",
+          }}
+        >
+          {isLoading ? "Saving..." : "Save"}
+        </Button>
+      </Stack>
+    </Stack>
   );
 };

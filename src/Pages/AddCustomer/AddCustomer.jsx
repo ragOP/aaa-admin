@@ -10,13 +10,27 @@ const AddCustomer = () => {
     password: "",
     name: "",
     email: "",
+    address: "",
+    gst: "",
+    contactPerson: "",
+    phoneNumber: "",
   });
 
+  const handleFieldChange = (name, value) => {
+    const fieldHandlers = {
+      phoneNumber: (val) => val.replace(/\D/g, ""),
+    };
+
+    return fieldHandlers[name] ? fieldHandlers[name](value) : value;
+  };
+
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    const { name, value } = e.target;
+
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: handleFieldChange(name, value),
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -38,7 +52,7 @@ const AddCustomer = () => {
           id: loadingToastId,
         });
         setTimeout(() => {
-          navigate("/dashboard/customers");
+          navigate("/admin/customers");
         }, 2000);
       } else {
         const errorMessage = await response.text();
@@ -145,6 +159,82 @@ const AddCustomer = () => {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                 placeholder="Enter email"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="address"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Address
+              </label>
+              <input
+                type="address"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter address"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="gst"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                GST
+              </label>
+              <input
+                type="text"
+                id="gst"
+                name="gst"
+                value={formData.gst}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter gst"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="contactPerson"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Contact Person
+              </label>
+              <input
+                type="text"
+                id="contactPerson"
+                name="contactPerson"
+                value={formData.contactPerson}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter contact person"
+                required
+              />
+            </div>
+
+            <div className="mb-6">
+              <label
+                htmlFor="phoneNumber"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Phone Number
+              </label>
+              <input
+                type="text"
+                id="phoneNumber"
+                name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                placeholder="Enter phoneNumber"
                 required
               />
             </div>

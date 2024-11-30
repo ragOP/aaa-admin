@@ -41,7 +41,8 @@ const ClientsTable = ({
     { value: "name", label: "Name", align: "left" },
     { value: "username", label: "Username", align: "center" },
     { value: "email", label: "Email", align: "center" },
-    { value: "contact_person", label: "Contact person", align: "center" },
+    { value: "contact_person", label: "Contact Person", align: "center" },
+    { value: "phone_number", label: "Phone Number", align: "center" },
     { value: "address", label: "Address", align: "center" },
     { value: "date", label: "Date", align: "center" },
     { value: "gst", label: "GST", align: "center" },
@@ -52,6 +53,7 @@ const ClientsTable = ({
     username: (data) => <Typography>{data?.userName}</Typography>,
     email: (data) => <Typography>{data?.email}</Typography>,
     contact_person: (data) => <Typography>{data?.contactPerson}</Typography>,
+    phone_number: (data) => <Typography>{data?.phoneNumber || "-"}</Typography>,
     address: (data) => <Typography>{data?.address}</Typography>,
     date: (data) => (
       <Typography>{customDateFormatting({ date: data?.createdAt })}</Typography>

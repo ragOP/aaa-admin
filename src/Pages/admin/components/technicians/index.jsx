@@ -25,19 +25,19 @@ const Technicians = () => {
   });
 
   const statsData = [
-    { label: "Total technicians", total_number: techniciansData?.total || 0 },
-    {
-      label: "Active technicians",
-      total_number:
-        techniciansData?.filter((technician) => technician?.active)?.length ||
-        0,
-    },
-    {
-      label: "Inactive technicians",
-      total_number:
-        techniciansData?.filter((technician) => !technician?.active)?.length ||
-        0,
-    },
+    { label: "Total technicians", total_number: techniciansData?.length || 0 },
+    // {
+    //   label: "Active technicians",
+    //   total_number:
+    //     techniciansData?.filter((technician) => technician?.active)?.length ||
+    //     0,
+    // },
+    // {
+    //   label: "Inactive technicians",
+    //   total_number:
+    //     techniciansData?.filter((technician) => !technician?.active)?.length ||
+    //     0,
+    // },
   ];
 
   if (isError) {
