@@ -24,6 +24,9 @@ const AddProject = () => {
     panels: [""],
     siteLocation: "",
     activity: "Pending",
+    warranty: null,
+    AMC: null,
+    technical_documentation: null,
   });
 
   // Fetch customers using tanstack-query
@@ -59,6 +62,19 @@ const AddProject = () => {
     }));
   };
 
+  console.log("formData >>", formData);
+
+  const handleFiles = (e) => {
+    const { name } = e.target;
+
+    const file = e.target.files[0];
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: file,
+    }));
+  };
+
   const handleCustomerChange = (_, selectedCustomer) => {
     setFormData((prev) => ({
       ...prev,
@@ -89,7 +105,22 @@ const AddProject = () => {
         (panel) => panel.trim() !== ""
       );
 
-      const dataToSubmit = { ...formData, panels: filteredPanels };
+      // const dataToSubmit = { ...formData, panels: filteredPanels };
+
+      const dataToSubmit = new FormData();
+      dataToSubmit.append("customerId", formData.customerId);
+      dataToSubmit.append("title", formData.title);
+      dataToSubmit.append("siteLocation", formData.siteLocation);
+      dataToSubmit.append("activity", formData.activity);
+      filteredPanels.forEach((panel, index) => {
+        dataToSubmit.append(`panels[${index}]`, panel);
+      });
+      dataToSubmit.append("warranty", formData.warranty);
+      dataToSubmit.append("AMC", formData.AMC);
+      dataToSubmit.append(
+        "technical_documentation",
+        formData.technical_documentation
+      );
 
       const response = await apiService({
         endpoint: endpoints.addProject,
@@ -275,6 +306,66 @@ const AddProject = () => {
                   <option value="Ongoing">Ongoing</option>
                   <option value="Completed">Completed</option>
                 </select>
+              </div>
+            )}
+
+            {formData.customerId && (
+              <div className="mb-4">
+                <label
+                  htmlFor="warranty"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Warranty (PDF)
+                </label>
+                <input
+                  type="file"
+                  id="warranty"
+                  name="warranty"
+                  accept="application/pdf"
+                  onChange={handleFiles}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                  required
+                />
+              </div>
+            )}
+
+            {formData.customerId && (
+              <div className="mb-4">
+                <label
+                  htmlFor="AMC"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  AMC (PDF)
+                </label>
+                <input
+                  type="file"
+                  id="AMC"
+                  name="AMC"
+                  accept="application/pdf"
+                  onChange={handleFiles}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                  required
+                />
+              </div>
+            )}
+
+            {formData.customerId && (
+              <div className="mb-4">
+                <label
+                  htmlFor="technical_documentation"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Technical Documentation (PDF)
+                </label>
+                <input
+                  type="file"
+                  id="technical_documentation"
+                  name="technical_documentation"
+                  accept="application/pdf"
+                  onChange={handleFiles}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                  required
+                />
               </div>
             )}
 

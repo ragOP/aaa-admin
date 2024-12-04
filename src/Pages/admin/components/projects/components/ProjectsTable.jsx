@@ -29,7 +29,6 @@ const ProjectsTable = ({
   };
 
   const onClickTableItem = (_e, data) => {
-    console.log("data", data);
     navigate(`/admin/projects/${data?._id}`);
   };
 
@@ -184,7 +183,6 @@ export const ProjectsPanels = ({ data }) => {
 };
 
 export const ProjectActivityChip = ({ activity }) => {
-  console.log(">>> activity", activity);
   const getChipProps = () => {
     switch (activity) {
       case "Pending":

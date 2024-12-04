@@ -9,6 +9,9 @@ import {
   Divider,
   Autocomplete,
   TextField,
+  Select,
+  MenuItem,
+  InputLabel,
 } from "@mui/material";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import SearchBox from "../../../../../components/search_box/SearchBox";
@@ -35,6 +38,7 @@ const ComplaintsTable = ({
 }) => {
   const navigate = useNavigate();
   const [selectedComplaint, setSelectedComplaint] = useState(null);
+  const [filter, setFilter] = useState("all");
 
   const {
     data: techniciansData = [],
@@ -72,13 +76,20 @@ const ComplaintsTable = ({
   };
 
   const filteredComplaints = useMemo(() => {
-    return complaintsData.filter((complaint) =>
+    const filteredBySearch = complaintsData.filter((complaint) =>
       Object.values(complaint)
         .join(" ")
         .toLowerCase()
         .includes(searchText.toLowerCase())
     );
-  }, [complaintsData, searchText]);
+
+    if (filter === "assigned") {
+      return filteredBySearch.filter((complaint) => complaint.technician);
+    } else if (filter === "unassigned") {
+      return filteredBySearch.filter((complaint) => !complaint.technician);
+    }
+    return filteredBySearch;
+  }, [complaintsData, searchText, filter]);
 
   const onClickTableItem = (_e, data) => {
     console.log("data", data);
@@ -95,13 +106,24 @@ const ComplaintsTable = ({
     { value: "date", label: "Date", align: "center" },
     { value: "last_activity", label: "Last activity", align: "center" },
     { value: "status_code", label: "Code", align: "center" },
-    { value: "actions", label: "Actions", align: "center" },
   ];
 
   const complaintsRowMapping = {
     name: (data) => <Typography>{data?.projectName || "-"}</Typography>,
     technician: (data) => (
-      <Typography>{data?.technician?.name || "-"}</Typography>
+      <>
+        {!data?.technician ? (
+          <Button
+            variant="contained"
+            onClick={(e) => onOpenSelect(e, data)}
+            sx={{ textTransform: "none", whiteSpace: "nowrap" }}
+          >
+            {data?.technician ? "Edit Technician" : "Add Technician"}
+          </Button>
+        ) : (
+          <Typography>{data?.technician?.name || "-"}</Typography>
+        )}
+      </>
     ),
     activity: (data) => (
       <ActivityAndSeverityComponent value={data?.activity} type="activity" />
@@ -122,15 +144,6 @@ const ComplaintsTable = ({
       </Typography>
     ),
     status_code: (data) => <Typography>{data?.statusCode || "-"}</Typography>,
-    actions: (data) => (
-      <Button
-        variant="contained"
-        onClick={(e) => onOpenSelect(e, data)}
-        sx={{ textTransform: "none", whiteSpace: "nowrap" }}
-      >
-        {data?.technician ? "Edit Technician" : "Add Technician"}
-      </Button>
-    ),
   };
 
   return (
@@ -158,8 +171,24 @@ const ComplaintsTable = ({
           <Stack
             direction="row"
             alignItems="center"
-            sx={{ gap: "1rem", width: "40%" }}
+            sx={{ gap: "1rem", width: "50%" }}
           >
+            <Typography sx={{ fontSize: "1rem" }}>Status:</Typography>
+            <Select
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              size="small"
+              sx={{
+                backgroundColor: "#fff",
+                borderRadius: "8px",
+                minWidth: "9rem",
+              }}
+            >
+              <MenuItem value="all">All</MenuItem>
+              <MenuItem value="assigned">Assigned</MenuItem>
+              <MenuItem value="unassigned">Unassigned</MenuItem>
+            </Select>
+
             <SearchBox
               onChange={onChangeText}
               value={searchText}
@@ -361,7 +390,6 @@ export const SelectTechnicianBox = ({
   });
 
   const onSelectTechnician = (technician) => {
-    console.log("Selected Technician:", technician);
     setSelectedTechnician(technician);
   };
 
@@ -372,8 +400,6 @@ export const SelectTechnicianBox = ({
     }
     mutate(selectedTechnician._id);
   };
-
-  console.log(">> Technicians Data:", techniciansData, selectedTechnician);
 
   return (
     <Stack sx={{ borderRadius: "0.625rem" }}>
