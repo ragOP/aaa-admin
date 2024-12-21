@@ -368,20 +368,22 @@ export const SelectTechnicianBox = ({
 }) => {
   const [selectedTechnician, setSelectedTechnician] = useState(null);
 
-  const { mutate, isLoading } = useMutation({
+  const { mutate, isUpdatingUser } = useMutation({
     mutationFn: async (technicianId) => {
       const response = await apiService({
         endpoint: `${endpoints.patchTechnician}/${selectedComplaint?._id}`,
         method: "PATCH",
         data: { technicianId },
       });
-
       return response;
     },
-    onSuccess: () => {
-      toast.success("Technician assigned successfully!");
-      refetch();
-      setOpenSelect(false);
+    onSuccess: (response) => {
+      console.log(">>>", response);
+      if (response?.response?.success) {
+        refetch();
+        setOpenSelect(false);
+        toast.success("Technician assigned successfully!");
+      }
     },
     onError: (error) => {
       toast.error("Failed to assign technician. Please try again.");
@@ -452,12 +454,12 @@ export const SelectTechnicianBox = ({
         <Button
           onClick={onSaveTechnician}
           variant="contained"
-          disabled={isLoading || !selectedTechnician}
+          disabled={isUpdatingUser || !selectedTechnician}
           sx={{
             position: "relative",
           }}
         >
-          {isLoading ? "Saving..." : "Save"}
+          {isUpdatingUser ? "Saving..." : "Save"}
         </Button>
       </Stack>
     </Stack>
