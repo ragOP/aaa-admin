@@ -100,7 +100,7 @@ const ComplaintsTable = ({
     { value: "name", label: "Name", align: "left" },
     { value: "technician", label: "Technician", align: "center" },
     { value: "activity", label: "Activity", align: "center" },
-    { value: "severity", label: "severity", align: "center" },
+    { value: "severity", label: "Severity", align: "center" },
     { value: "panel", label: "Panel", align: "center" },
     { value: "address", label: "Address", align: "center" },
     { value: "date", label: "Date", align: "center" },

@@ -21,8 +21,6 @@ const Dashboard = () => {
     },
   });
 
-  console.log(">>>", statsData);
-
   return (
     <Stack sx={{ gap: "1rem", padding: "1rem" }}>
       <DashboardStats stats={statsData} isLoading={isLoading} />

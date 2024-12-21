@@ -28,10 +28,7 @@ function LoginPage() {
         removeToken: true,
       });
 
-      if (
-        apiResponse?.response?.success &&
-        apiResponse?.response?.statusCode === 200
-      ) {
+      if (apiResponse?.response?.success) {
         const data = await apiResponse?.response?.data;
 
         localStorage.setItem("token", data?.token);
