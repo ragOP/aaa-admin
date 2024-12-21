@@ -48,9 +48,8 @@ const Header = () => {
 
         <div className="flex items-center gap-2">
           <button
-            onClick={handleLogout}
+            // onClick={handleLogout}
             className="p-2 mb-0  rounded-full bg-slate-100 hover:bg-gray-200 focus:outline-none focus:ring focus:ring-gray-300"
-            aria-label="Logout"
           >
             <UserIcon className="h-6 w-6 text-black" />
           </button>
