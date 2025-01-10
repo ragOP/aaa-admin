@@ -23,6 +23,9 @@ import AddCustomer from "./Pages/AddCustomer/AddCustomer.jsx";
 import AddEngineer from "./Pages/AddEngineer/AddEngineer.jsx";
 import AddProject from "./Pages/admin/components/projects/pages/add_project/index.jsx";
 import ProjectsDetailsPage from "./Pages/admin/components/projects/pages/project_details_page/index.jsx";
+import AddWarranty from "./Pages/admin/components/warranty/pages/add_warranty/index.jsx";
+import AddAmc from "./Pages/admin/components/amc/pages/add_amc/index.jsx";
+import WarrantyDetails from "./Pages/admin/components/warranty/pages/warranty_details/index.jsx";
 
 function App() {
   return (
@@ -58,7 +61,10 @@ function App() {
           <Route path="technicians/create" element={<AddEngineer />} />
           <Route path="technicians/:id" element={<TechniciansDetailsPage />} />
           <Route path="warranty" element={<Warranty />} />
+          <Route path="warranty/create" element={<AddWarranty />} />
+          <Route path="warranty/:id" element={<WarrantyDetails />} />
           <Route path="amc" element={<Amc />} />
+          <Route path="amc/create" element={<AddAmc />} />
           <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" />} />

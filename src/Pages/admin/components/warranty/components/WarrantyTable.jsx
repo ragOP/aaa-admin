@@ -5,96 +5,96 @@ import { customDateFormatting } from "../../../../../utils/date/customDateFormat
 import { useMemo } from "react";
 import DataTable from "../../../../../components/data_table";
 import SearchBox from "../../../../../components/search_box/SearchBox";
-import { EyeIcon, PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
+import { ArrowDownTrayIcon, EyeIcon, PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const warrantyData = [
   {
     id: 1,
     title: "Warranty 1",
     companyName: "Company 1",
-    duration_in_years: 1,
+    durationInMonths: 1,
     createdAt: "2021-10-10",
     updatedAt: "2021-10-10",
     panels: [],
     projectName: "Product 1",
-    date_of_commissioning: "2021-10-10",
+    dateOfCommissioining: "2021-10-10",
   },
   {
     id: 2,
     title: "Warranty 2",
     companyName: "Company 2",
-    duration_in_years: 2,
+    durationInMonths: 2,
     createdAt: "2022-01-15",
     updatedAt: "2022-01-15",
     panels: [],
     projectName: "Product 2",
-    date_of_commissioning: "2022-01-15",
+    dateOfCommissioining: "2022-01-15",
   },
   {
     id: 3,
     title: "Warranty 3",
     companyName: "Company 3",
-    duration_in_years: 3,
+    durationInMonths: 3,
     createdAt: "2023-05-20",
     updatedAt: "2023-05-20",
     panels: [],
     projectName: "Product 3",
-    date_of_commissioning: "2023-05-20",
+    dateOfCommissioining: "2023-05-20",
   },
   {
     id: 4,
     title: "Warranty 4",
     companyName: "Company 4",
-    duration_in_years: 4,
+    durationInMonths: 4,
     createdAt: "2024-08-25",
     updatedAt: "2024-08-25",
     panels: [],
     projectName: "Product 4",
-    date_of_commissioning: "2024-08-25",
+    dateOfCommissioining: "2024-08-25",
   },
   {
     id: 5,
     title: "Warranty 5",
     companyName: "Company 5",
-    duration_in_years: 5,
+    durationInMonths: 5,
     createdAt: "2025-11-30",
     updatedAt: "2025-11-30",
     panels: [],
     projectName: "Product 5",
-    date_of_commissioning: "2025-11-30",
+    dateOfCommissioining: "2025-11-30",
   },
   {
     id: 6,
     title: "Warranty 6",
     companyName: "Company 6",
-    duration_in_years: 6,
+    durationInMonths: 6,
     createdAt: "2026-02-14",
     updatedAt: "2026-02-14",
     panels: [],
     projectName: "Product 6",
-    date_of_commissioning: "2026-02-14",
+    dateOfCommissioining: "2026-02-14",
   },
   {
     id: 7,
     title: "Warranty 7",
     companyName: "Company 7",
-    duration_in_years: 7,
+    durationInMonths: 7,
     createdAt: "2027-07-19",
     updatedAt: "2027-07-19",
     panels: [],
     projectName: "Product 7",
-    date_of_commissioning: "2027-07-19",
+    dateOfCommissioining: "2027-07-19",
   },
   {
     id: 8,
     title: "Warranty 8",
     companyName: "Company 8",
-    duration_in_years: 8,
+    durationInMonths: 8,
     createdAt: "2028-09-23",
     updatedAt: "2028-09-23",
     panels: [],
     projectName: "Product 8",
-    date_of_commissioning: "2028-09-23",
+    dateOfCommissioining: "2028-09-23",
   },
 ];
 
@@ -129,9 +129,9 @@ const WarrantyTable = ({
   const warrantyTableTitles = [
     { value: "title", label: "Title", align: "left" },
     { value: "companyName", label: "Company Name", align: "center" },
-    { value: "duration_in_years", label: "Duration (Years)", align: "center" },
+    { value: "durationInMonths", label: "Duration (Months)", align: "center" },
     { value: "projectName", label: "Project Name", align: "center" },
-    { value: "date_of_commissioning", label: "Date of Commissioning", align: "center" },
+    { value: "dateOfCommissioining", label: "Date of Commissioning", align: "center" },
     // { value: "createdAt", label: "Created At", align: "center" },
     { value: "updatedAt", label: "Updated At", align: "center" },
     { value: "action", label: "Action", align: "center" },
@@ -140,11 +140,11 @@ const WarrantyTable = ({
   const warrantyRowMapping = {
     title: (data) => <Typography>{data?.title || "-"}</Typography>,
     companyName: (data) => <Typography>{data?.companyName || "-"}</Typography>,
-    duration_in_years: (data) => <Typography>{data?.duration_in_years || "-"}</Typography>,
+    durationInMonths: (data) => <Typography>{data?.durationInMonths || "-"}</Typography>,
     projectName: (data) => <Typography>{data?.projectName || "-"}</Typography>,
-    date_of_commissioning: (data) => (
+    dateOfCommissioining: (data) => (
       <Typography>
-        {customDateFormatting({ date: data?.date_of_commissioning }) || "-"}
+        {customDateFormatting({ date: data?.dateOfCommissioining }) || "-"}
       </Typography>
     ),
     // createdAt: (data) => (
@@ -160,8 +160,8 @@ const WarrantyTable = ({
     action: (data) => (
       <Stack direction="row" alignItems="center" justifyContent="center" gap="0.5rem">
         <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
-          <Tooltip arrow title="View certificate">
-            <EyeIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
+          <Tooltip arrow title="Download">
+            <ArrowDownTrayIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>
         </IconButton>
         <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>

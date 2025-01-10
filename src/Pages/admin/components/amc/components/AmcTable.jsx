@@ -1,11 +1,11 @@
-import { Button, Stack, Typography, IconButton } from "@mui/material";
+import { Button, Stack, Typography, IconButton, Tooltip } from "@mui/material";
 import { useNavigate } from "react-router";
 import TableSkeleton from "../../../../../components/skeleton/TableSkeleton";
 import { customDateFormatting } from "../../../../../utils/date/customDateFormatting";
 import { useMemo } from "react";
 import DataTable from "../../../../../components/data_table";
 import SearchBox from "../../../../../components/search_box/SearchBox";
-import { PlusIcon, PencilIcon, EyeIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, PencilIcon, EyeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
 const amcData = [
   {
@@ -85,7 +85,7 @@ const AmcTable = ({
   const amcTableTitles = [
     { value: "title", label: "Title", align: "left" },
     { value: "companyName", label: "Company Name", align: "center" },
-    { value: "duration_in_years", label: "Duration (Years)", align: "center" },
+    { value: "duration_in_years", label: "Duration (Months)", align: "center" },
     { value: "productName", label: "Product Name", align: "center" },
     { value: "date_of_commissioning", label: "Date of Commissioning", align: "center" },
     { value: "createdAt", label: "Created At", align: "center" },
@@ -116,12 +116,16 @@ const AmcTable = ({
     ),
     amount: (data) => <Typography>{data?.amount || "-"}</Typography>,
     action: (data) => (
-      <Stack direction="row" alignItems="center" gap="0.5rem">
-        <IconButton sx={{ padding: "0.25rem" }}>
-          <PencilIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
+      <Stack direction="row" alignItems="center" justifyContent="center" gap="0.5rem">
+        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+          <Tooltip arrow title="Download">
+            <ArrowDownTrayIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
+          </Tooltip>
         </IconButton>
-        <IconButton sx={{ padding: "0.25rem" }}>
-          <EyeIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
+        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+          <Tooltip arrow title="Edit">
+            <PencilIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
+          </Tooltip>
         </IconButton>
       </Stack>
     ),
