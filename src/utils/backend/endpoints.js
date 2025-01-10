@@ -7,5 +7,7 @@ export const endpoints = {
   project: "api/admin/get-project",
   singleProject: "api/admin/get-single-project",
   addProject: "api/admin/add-project",
-  patchTechnician: "api/admin/add-technican"
+  patchTechnician: "api/admin/add-technican",
+  warranty: "api/admin/warranty",
+  amc: "api/admin/amc",
 };
