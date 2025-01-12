@@ -171,7 +171,18 @@ const AddAmc = () => {
                 method: "GET",
             })
             if (amcApiResponse?.response?.success) {
-                const data = amcApiResponse?.response?.data?.amc;
+                const data = amcApiResponse?.response?.data?.data;
+                setFormData((prev) => ({
+                    ...prev,
+                    projectId: data?.projectId || "",
+                    projectName: data?.projectName || "",
+                    customerId: data?.customerId || "",
+                    customerName: data?.customerName || "",
+                    durationInMonths: data?.durationInMonths || "",
+                    panels: data?.panels || [],
+                    amount: data?.amount || 0,
+                    dateOfCommissioning: data?.dateOfCommissioning ? new Date(data.dateOfCommissioning)?.toISOString()?.split('T')?.[0] : "",
+                }))
                 setFormData(data)
             }
         } catch (e) {
