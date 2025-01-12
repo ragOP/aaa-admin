@@ -62,9 +62,12 @@ function App() {
           <Route path="technicians/:id" element={<TechniciansDetailsPage />} />
           <Route path="warranty" element={<Warranty />} />
           <Route path="warranty/create" element={<AddWarranty />} />
+          <Route path="warranty/edit/:id" element={<AddWarranty />} />
           <Route path="warranty/:id" element={<WarrantyDetails />} />
           <Route path="amc" element={<Amc />} />
           <Route path="amc/create" element={<AddAmc />} />
+          <Route path="amc/edit/:id" element={<WarrantyDetails />} />
+          <Route path="amc/:id" element={<WarrantyDetails />} />
           <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" />} />

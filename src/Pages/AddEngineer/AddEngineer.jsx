@@ -44,7 +44,7 @@ const AddEngineer = () => {
           navigate("/admin/technicians");
         }, 2000);
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = response?.response?.data?.data?.message || "Erorr while creating engineer, try again.";
         throw new Error(errorMessage);
       }
     } catch (error) {

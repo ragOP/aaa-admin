@@ -20,7 +20,7 @@ const Warranty = () => {
         endpoint: endpoints.warranty,
         method: "GET",
       });
-      return projectsApiResponse?.response?.data?.warranty || [];
+      return projectsApiResponse?.response?.data?.warranties || [];
     },
   });
 

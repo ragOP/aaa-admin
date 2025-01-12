@@ -7,36 +7,40 @@ import { endpoints } from "../../../../../../utils/backend/endpoints";
 import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
 import WarrantyCertificate from "../../../../../../components/warranty_certificate";
 
-const test = {
-  id: 1,
-  title: "Warranty 1",
-  companyName: "Company 1",
-  durationInMonths: 1,
-  createdAt: "2021-10-10",
-  updatedAt: "2021-10-10",
-  panels: [],
-  projectName: "Product 1",
-  dateOfCommissioining: "2021-10-10",
-}
+const formatDuration = (months) => {
+  if (!months) return "";
+
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
+
+  let result = "";
+  if (years > 0) {
+      result += `${years} year${years > 1 ? "s" : ""}`;
+  }
+  if (remainingMonths > 0) {
+      result += `${years > 0 ? " " : ""}${remainingMonths} month${remainingMonths > 1 ? "s" : ""}`;
+  }
+  return result;
+};
 
 const WarrantyDetails = () => {
   const { id } = useParams();
 
-  // const { data, isLoading, isError } = useQuery({
-  //   queryKey: ["warranty", id],
-  //   queryFn: async () => {
-  //     const response = await apiService({
-  //       endpoint: `${endpoints.warranty}/${id}`,
-  //       method: "GET",
-  //     });
-  //     return response?.response?.data?.data || null;
-  //   },
-  //   enabled: !!id,
-  // });
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["warranty", id],
+    queryFn: async () => {
+      const response = await apiService({
+        endpoint: `${endpoints.getWarranty}/${id}`,
+        method: "GET",
+      });
+      return response?.response?.data?.data || null;
+    },
+    enabled: !!id,
+  });
 
-  // if (isLoading) return <BoxCircularLoader sx={{ height: "100%" }} />;
-  // if (isError || !data)
-  //   return <Typography>Failed to load warranty details.</Typography>;
+  if (isLoading) return <BoxCircularLoader sx={{ height: "100%" }} />;
+  if (isError || !data)
+    return <Typography>Failed to load warranty details.</Typography>;
 
   return (
     <Stack
@@ -44,12 +48,18 @@ const WarrantyDetails = () => {
       sx={{ padding: "2rem", background: "#f4f6f8", minHeight: "100vh" }}
     >
       <Card sx={{ padding: 2 }}>
-          <Typography variant="h5">
-            Warranty Details
-          </Typography>
+        <Typography variant="h5">
+          Warranty Details
+        </Typography>
       </Card>
 
-      <WarrantyCertificate />
+      <WarrantyCertificate
+        companyName={data?.customerName}
+        dateOfCommissioning={data?.dateOfCommissioning}
+        durationInYears={formatDuration(data?.durationInMonths) || 0}
+        panels={data?.panels || []}
+        projectName={data?.projectName}
+      />
 
     </Stack>
   );

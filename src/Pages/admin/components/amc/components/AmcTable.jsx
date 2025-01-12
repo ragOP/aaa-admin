@@ -7,54 +7,8 @@ import DataTable from "../../../../../components/data_table";
 import SearchBox from "../../../../../components/search_box/SearchBox";
 import { PlusIcon, PencilIcon, EyeIcon, ArrowDownTrayIcon } from "@heroicons/react/24/outline";
 
-const amcData = [
-  {
-    id: 1,
-    title: "AMC 1",
-    companyName: "Company 1",
-    duration_in_years: 1,
-    createdAt: "2021-10-10",
-    updatedAt: "2021-10-10",
-    productName: "Product 1",
-    date_of_commissioning: "2021-10-10",
-    amount: 1000,
-  },
-  {
-    id: 2,
-    title: "AMC 2",
-    companyName: "Company 2",
-    duration_in_years: 2,
-    createdAt: "2022-01-15",
-    updatedAt: "2022-01-15",
-    productName: "Product 2",
-    date_of_commissioning: "2022-01-15",
-    amount: 2000,
-  },
-  {
-    id: 3,
-    title: "AMC 3",
-    companyName: "Company 3",
-    duration_in_years: 3,
-    createdAt: "2023-05-20",
-    updatedAt: "2023-05-20",
-    productName: "Product 3",
-    date_of_commissioning: "2023-05-20",
-    amount: 3000,
-  },
-  {
-    id: 4,
-    title: "AMC 4",
-    companyName: "Company 4",
-    duration_in_years: 4,
-    createdAt: "2024-08-25",
-    updatedAt: "2024-08-25",
-    productName: "Product 4",
-    date_of_commissioning: "2024-08-25",
-    amount: 4000,
-  },
-];
-
 const AmcTable = ({
+  amcData,
   isLoading,
   searchText,
   setSearchText,
@@ -80,28 +34,44 @@ const AmcTable = ({
         .toLowerCase()
         .includes(searchText.toLowerCase())
     );
-  }, [searchText]);
+  }, [amcData, searchText]);
 
   const amcTableTitles = [
-    { value: "title", label: "Title", align: "left" },
-    { value: "companyName", label: "Company Name", align: "center" },
-    { value: "duration_in_years", label: "Duration (Months)", align: "center" },
+    { value: "companyName", label: "Customer Name", align: "center" },
+    { value: "durationInMonths", label: "Duration (Months)", align: "center" },
     { value: "productName", label: "Product Name", align: "center" },
-    { value: "date_of_commissioning", label: "Date of Commissioning", align: "center" },
+    { value: "dateOfCommissionining", label: "Date of Commissioning", align: "center" },
     { value: "createdAt", label: "Created At", align: "center" },
     { value: "updatedAt", label: "Updated At", align: "center" },
     { value: "amount", label: "Amount", align: "center" },
     { value: "action", label: "Action", align: "center" },
   ];
 
+  const onDownloadAmcCeritficatePdf = (e, data) => {
+    e.stopPropagation()
+
+    const link = document.createElement("a");
+    link.href = data?.warrntyPdf;
+    link.download = "amc_certificate.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  }
+
+  const onEditWarranty = (e, data) => {
+    e.stopPropagation()
+    navigate(`/admin/amc/edit/${data?._id}`);
+  }
+
   const amcRowMapping = {
     title: (data) => <Typography>{data?.title || "-"}</Typography>,
-    companyName: (data) => <Typography>{data?.companyName || "-"}</Typography>,
-    duration_in_years: (data) => <Typography>{data?.duration_in_years || "-"}</Typography>,
+    companyName: (data) => <Typography>{data?.customerName || "-"}</Typography>,
+    durationInMonths: (data) => <Typography>{data?.durationInMonths || "-"}</Typography>,
     productName: (data) => <Typography>{data?.productName || "-"}</Typography>,
-    date_of_commissioning: (data) => (
+    dateOfCommissionining: (data) => (
       <Typography>
-        {customDateFormatting({ date: data?.date_of_commissioning }) || "-"}
+        {customDateFormatting({ date: data?.dateOfCommissioning }) || "-"}
       </Typography>
     ),
     createdAt: (data) => (
@@ -117,12 +87,12 @@ const AmcTable = ({
     amount: (data) => <Typography>{data?.amount || "-"}</Typography>,
     action: (data) => (
       <Stack direction="row" alignItems="center" justifyContent="center" gap="0.5rem">
-        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={onDownloadAmcCeritficatePdf} sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Download">
             <ArrowDownTrayIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>
         </IconButton>
-        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={onEditWarranty}  sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Edit">
             <PencilIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>

@@ -42,7 +42,7 @@ function LoginPage() {
           navigate("/admin/dashboard");
         }, 2000);
       } else {
-        const errorMessage = await apiResponse?.response?.data?.message;
+        const errorMessage = apiResponse?.response?.data?.data?.message || "Erorr while login, try again.";
         toast.error(errorMessage, { id: loadingToastId });
       }
     } catch (error) {

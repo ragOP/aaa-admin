@@ -55,7 +55,7 @@ const AddCustomer = () => {
           navigate("/admin/customers");
         }, 2000);
       } else {
-        const errorMessage = await response.text();
+        const errorMessage = response?.response?.data?.data?.message || "Erorr while creating customer, try again.";
         throw new Error(errorMessage);
       }
     } catch (error) {

@@ -20,7 +20,7 @@ const Amc = () => {
         endpoint: endpoints.amc,
         method: "GET",
       });
-      return amcApiResponse?.response?.data?.amc || [];
+      return amcApiResponse?.response?.data?.amcs || [];
     },
   });
 

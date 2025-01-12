@@ -5,100 +5,10 @@ import { customDateFormatting } from "../../../../../utils/date/customDateFormat
 import { useMemo } from "react";
 import DataTable from "../../../../../components/data_table";
 import SearchBox from "../../../../../components/search_box/SearchBox";
-import { ArrowDownTrayIcon, EyeIcon, PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
-
-const warrantyData = [
-  {
-    id: 1,
-    title: "Warranty 1",
-    companyName: "Company 1",
-    durationInMonths: 1,
-    createdAt: "2021-10-10",
-    updatedAt: "2021-10-10",
-    panels: [],
-    projectName: "Product 1",
-    dateOfCommissioining: "2021-10-10",
-  },
-  {
-    id: 2,
-    title: "Warranty 2",
-    companyName: "Company 2",
-    durationInMonths: 2,
-    createdAt: "2022-01-15",
-    updatedAt: "2022-01-15",
-    panels: [],
-    projectName: "Product 2",
-    dateOfCommissioining: "2022-01-15",
-  },
-  {
-    id: 3,
-    title: "Warranty 3",
-    companyName: "Company 3",
-    durationInMonths: 3,
-    createdAt: "2023-05-20",
-    updatedAt: "2023-05-20",
-    panels: [],
-    projectName: "Product 3",
-    dateOfCommissioining: "2023-05-20",
-  },
-  {
-    id: 4,
-    title: "Warranty 4",
-    companyName: "Company 4",
-    durationInMonths: 4,
-    createdAt: "2024-08-25",
-    updatedAt: "2024-08-25",
-    panels: [],
-    projectName: "Product 4",
-    dateOfCommissioining: "2024-08-25",
-  },
-  {
-    id: 5,
-    title: "Warranty 5",
-    companyName: "Company 5",
-    durationInMonths: 5,
-    createdAt: "2025-11-30",
-    updatedAt: "2025-11-30",
-    panels: [],
-    projectName: "Product 5",
-    dateOfCommissioining: "2025-11-30",
-  },
-  {
-    id: 6,
-    title: "Warranty 6",
-    companyName: "Company 6",
-    durationInMonths: 6,
-    createdAt: "2026-02-14",
-    updatedAt: "2026-02-14",
-    panels: [],
-    projectName: "Product 6",
-    dateOfCommissioining: "2026-02-14",
-  },
-  {
-    id: 7,
-    title: "Warranty 7",
-    companyName: "Company 7",
-    durationInMonths: 7,
-    createdAt: "2027-07-19",
-    updatedAt: "2027-07-19",
-    panels: [],
-    projectName: "Product 7",
-    dateOfCommissioining: "2027-07-19",
-  },
-  {
-    id: 8,
-    title: "Warranty 8",
-    companyName: "Company 8",
-    durationInMonths: 8,
-    createdAt: "2028-09-23",
-    updatedAt: "2028-09-23",
-    panels: [],
-    projectName: "Product 8",
-    dateOfCommissioining: "2028-09-23",
-  },
-];
+import { ArrowDownTrayIcon, PencilIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 const WarrantyTable = ({
+  warrantyData,
   isLoading,
   searchText,
   setSearchText,
@@ -124,11 +34,27 @@ const WarrantyTable = ({
         .toLowerCase()
         .includes(searchText.toLowerCase())
     );
-  }, [searchText]);
+  }, [warrantyData, searchText]);
+
+  const onDownloadWarrantyCeritficatePdf = (e, data) => {
+    e.stopPropagation()
+
+    const link = document.createElement("a");
+    link.href = data?.warrntyPdf;
+    link.download = "warranty_certificate.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+  }
+
+  const onEditWarranty = (e, data) => {
+    e.stopPropagation()
+    navigate(`/admin/warranty/edit/${data?._id}`);
+  }
 
   const warrantyTableTitles = [
-    { value: "title", label: "Title", align: "left" },
-    { value: "companyName", label: "Company Name", align: "center" },
+    { value: "companyName", label: "Customer Name", align: "center" },
     { value: "durationInMonths", label: "Duration (Months)", align: "center" },
     { value: "projectName", label: "Project Name", align: "center" },
     { value: "dateOfCommissioining", label: "Date of Commissioning", align: "center" },
@@ -139,12 +65,12 @@ const WarrantyTable = ({
 
   const warrantyRowMapping = {
     title: (data) => <Typography>{data?.title || "-"}</Typography>,
-    companyName: (data) => <Typography>{data?.companyName || "-"}</Typography>,
+    companyName: (data) => <Typography>{data?.customerName || "-"}</Typography>,
     durationInMonths: (data) => <Typography>{data?.durationInMonths || "-"}</Typography>,
     projectName: (data) => <Typography>{data?.projectName || "-"}</Typography>,
     dateOfCommissioining: (data) => (
       <Typography>
-        {customDateFormatting({ date: data?.dateOfCommissioining }) || "-"}
+        {customDateFormatting({ date: data?.dateOfCommissioning }) || "-"}
       </Typography>
     ),
     // createdAt: (data) => (
@@ -159,12 +85,12 @@ const WarrantyTable = ({
     ),
     action: (data) => (
       <Stack direction="row" alignItems="center" justifyContent="center" gap="0.5rem">
-        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={(e) => onDownloadWarrantyCeritficatePdf(e, data)} sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Download">
             <ArrowDownTrayIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>
         </IconButton>
-        <IconButton sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={(e) => onEditWarranty(e, data)} sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Edit">
             <PencilIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>
