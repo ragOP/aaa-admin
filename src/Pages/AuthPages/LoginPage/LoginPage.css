@@ -141,7 +141,7 @@ button {
 
 .coolinput label.text {
   font-size: 0.95rem;
-  color: #818cf8;
+  color: #fa2929;
   font-weight: 700;
   position: relative;
   top: 0.5rem;
@@ -154,13 +154,13 @@ button {
 .coolinput input[type="text"].input {
   padding: 11px 10px;
   font-size: 0.75rem;
-  border: 2px #818cf8 solid;
+  border: 2px #fa2929 solid;
   border-radius: 5px;
   background: #ffffff;
 }
 .coolinput label.password {
   font-size: 0.95rem;
-  color: #818cf8;
+  color: #fa2929;
   font-weight: 700;
   position: relative;
   top: 0.5rem;
@@ -173,10 +173,15 @@ button {
 .coolinput input[type="password"].input {
   padding: 11px 10px;
   font-size: 0.75rem;
-  border: 2px #818cf8 solid;
+  border: 2px #fa2929 solid;
   border-radius: 5px;
   background: #ffffff;
 }
+
+.coolinput input[type="text"].input:focus {
+  outline: 1px solid #fa2929; /* Updated outline style */
+}
+
 .coolinput input[type="password"].input:focus {
-  outline: none;
+  outline: 1px solid #fa2929; /* Updated outline style */
 }

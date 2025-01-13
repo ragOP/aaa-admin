@@ -68,7 +68,7 @@ function LoginPage() {
       />
       <div className="loginWrapper">
         {!isSmallScreen && (
-          <Stack alignItems="center" justifyContent="center" sx={{ ml: "12%"}}>
+          <Stack alignItems="center" justifyContent="center" sx={{ ml: "12%" }}>
             <BrandLogo />
           </Stack>
         )}
@@ -80,7 +80,7 @@ function LoginPage() {
                   Welcome Back to the{" "}
                   <b style={{ color: "#fa2929" }}>AAA - SWITCHGEAR</b> Panel
                 </h6>
-                <p style={{}}>Login and Get Started!</p>
+                <p style={{ color: "#fa2929" }}>Login and Get Started!</p>
               </div>
             </div>
 
