@@ -5,7 +5,8 @@ import "./LoginPage.css";
 import { apiService } from "../../../utils/backend/apiService";
 import { endpoints } from "../../../utils/backend/endpoints";
 import { getItem, setItem } from "../../../utils/local_storage";
-import { useMediaQuery } from "@mui/material";
+import { Stack, useMediaQuery } from "@mui/material";
+import BrandLogo from "../../../svgs/BrandLogo";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -67,7 +68,9 @@ function LoginPage() {
       />
       <div className="loginWrapper">
         {!isSmallScreen && (
-          <div className="loginRight" data-aos="fade-left"></div>
+          <Stack alignItems="center" justifyContent="center" sx={{ ml: "12%"}}>
+            <BrandLogo />
+          </Stack>
         )}
         <div className="loginLeft" data-aos="fade-right">
           <div className="loginLeftContainer">
@@ -75,11 +78,13 @@ function LoginPage() {
               <div className="loginLeftTitle">
                 <h6>
                   Welcome Back to the{" "}
-                  <b style={{ color: "#7d5ffe" }}>AAA - SWITCHGEAR</b> Panel
+                  <b style={{ color: "#fa2929" }}>AAA - SWITCHGEAR</b> Panel
                 </h6>
-                <p>Login and Get Started!</p>
+                <p style={{}}>Login and Get Started!</p>
               </div>
             </div>
+
+
             <form onSubmit={handleLogin}>
               <div className="coolinput">
                 <label htmlFor="input" className="text">
@@ -114,7 +119,7 @@ function LoginPage() {
               <button
                 className="loginBtn"
                 type="submit"
-                style={{ marginTop: "20px" }}
+                style={{ marginTop: "20px", backgroundColor: "#fa2929" }}
               >
                 Login
               </button>
