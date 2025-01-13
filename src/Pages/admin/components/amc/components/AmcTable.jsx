@@ -52,8 +52,9 @@ const AmcTable = ({
     e.stopPropagation()
 
     const link = document.createElement("a");
-    link.href = data?.warrntyPdf;
-    link.download = "amc_certificate.pdf";
+    link.href = data?.amcPdf;
+    link.download = `${data?.projectName}_amc_certificate.pdf`
+    link.target = "_blank"
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

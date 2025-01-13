@@ -6,6 +6,8 @@ import { useQuery } from "@tanstack/react-query";
 import { endpoints } from "../../../../../../utils/backend/endpoints";
 import html2pdf from "html2pdf.js";
 import WarrantyCertificate from "../../../../../../components/warranty_certificate";
+import { Tooltip } from "@mui/material";
+import { formatDuration } from "../warranty_details";
 
 const warrantyFormInitialState = {
     customerName: "",
@@ -13,7 +15,7 @@ const warrantyFormInitialState = {
     durationInMonths: "",
     projectName: "",
     projectId: "",
-    panels: "",
+    panels: [],
     dateOfCommissioning: "",
     warrantyPdf: null,
 }
@@ -115,7 +117,9 @@ const AddWarranty = () => {
             formDataWithPdf.append("customerName", formData.customerName);
             formDataWithPdf.append("customerId", formData.customerId);
             formDataWithPdf.append("durationInMonths", formData.durationInMonths);
-            formDataWithPdf.append("panels", JSON.stringify(formData.panels));
+            formData.panels.forEach((item, index) => {
+                formDataWithPdf.append(`panels[${index}]`, item);
+            });
             formDataWithPdf.append("dateOfCommissioning", formData.dateOfCommissioning);
             formDataWithPdf.append("warrantyPdf", pdfFile);
 
@@ -220,38 +224,43 @@ const AddWarranty = () => {
                         <form onSubmit={handleSubmit}>
 
                             <div className="mb-4">
-                                <label
-                                    htmlFor="name"
-                                    className="block text-gray-700 font-bold mb-2"
-                                >
-                                    Project Name
-                                </label>
-                                <select
-                                    id="projectName"
-                                    name="projectName"
-                                    value={formData.projectId}
-                                    onChange={(e) => handleChange(e, "projectName")}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-                                    required
-                                >
-                                    <option value="" disabled>
-                                        Select project
-                                    </option>
-                                    {projectsData && projectsData.length > 0 ? (
-                                        projectsData.map((project) => (
-                                            <option
-                                                key={project.id}
-                                                value={project.id}
-                                            >
-                                                {project.title}
-                                            </option>
-                                        ))
-                                    ) : (
+                                <Tooltip title={id ? "You cannot edit project name" : ""}>
+                                    <label
+                                        htmlFor="name"
+                                        className="block text-gray-700 font-bold mb-2"
+                                        disabled={id ? true : false}
+                                    >
+                                        Project Name
+                                    </label>
+                                    <select
+                                        id="projectName"
+                                        name="projectName"
+                                        value={formData.projectId}
+                                        onChange={(e) => handleChange(e, "projectName")}
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                                        required
+                                        disabled={id ? true : false}
+                                    >
                                         <option value="" disabled>
-                                            No projects present
+                                            Select project
                                         </option>
-                                    )}
-                                </select>
+                                        {projectsData && projectsData.length > 0 ? (
+                                            projectsData.map((project) => (
+                                                <option
+                                                    key={project.id}
+                                                    value={project.id}
+                                                >
+                                                    {project.title}
+                                                </option>
+                                            ))
+                                        ) : (
+                                            <option value="" disabled>
+                                                No projects present
+                                            </option>
+                                        )}
+                                    </select>
+                                </Tooltip>
+
                             </div>
 
                             <div className="mb-4">
@@ -347,11 +356,12 @@ const AddWarranty = () => {
                     <div style={{ display: "none" }}>
                         <WarrantyCertificate
                             ref={certificateRef}
-                            customerName={formData.customerName}
-                            durationInYears={formData.durationInMonths / 12}
+                            companyName={formData.customerName}
+                            durationInYears={formatDuration(formData.durationInMonths)}
                             dateOfCommissioning={formData.dateOfCommissioning}
                             projectName={formData.projectName}
                             panels={formData.panels}
+                            type="warranty"
                         />
                     </div>
                 </div>

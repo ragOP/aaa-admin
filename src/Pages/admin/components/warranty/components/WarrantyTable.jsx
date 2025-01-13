@@ -20,7 +20,7 @@ const WarrantyTable = ({
   };
 
   const onNavigateToPage = () => {
-    navigate(`/admin/warranty/create`);
+  navigate(`/admin/warranty/create`);
   };
 
   const onClickTableItem = (_e, data) => {
@@ -41,7 +41,8 @@ const WarrantyTable = ({
 
     const link = document.createElement("a");
     link.href = data?.warrntyPdf;
-    link.download = "warranty_certificate.pdf";
+    link.download = `${data?.projectName}_warranty_certificate.pdf`;
+    link.target = "_blank";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

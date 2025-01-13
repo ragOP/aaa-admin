@@ -7,7 +7,7 @@ import { endpoints } from "../../../../../../utils/backend/endpoints";
 import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
 import WarrantyCertificate from "../../../../../../components/warranty_certificate";
 
-const formatDuration = (months) => {
+export const formatDuration = (months) => {
   if (!months) return "";
 
   const years = Math.floor(months / 12);
@@ -26,8 +26,6 @@ const formatDuration = (months) => {
 const WarrantyDetails = ({ type = "warranty" }) => {
   const { id } = useParams();
 
-  console.log(">>", type)
-
   const { data, isLoading, isError } = useQuery({
     queryKey: ["warranty", id],
     queryFn: async () => {
@@ -44,6 +42,9 @@ const WarrantyDetails = ({ type = "warranty" }) => {
   if (isError || !data)
     return <Typography>Failed to load warranty details.</Typography>;
 
+  console.log(">>", type,data, type === "warranty" ? data?.warrntyPdf : data?.amcPdf)
+
+
   return (
     <Stack
       spacing={3}
@@ -55,13 +56,21 @@ const WarrantyDetails = ({ type = "warranty" }) => {
         </Typography>
       </Card>
 
-      <WarrantyCertificate
+      <iframe
+        src={type === "warranty" ? data?.warrntyPdf : data?.amcPdf}
+        width="100%"
+        height="700px"
+        style={{ border: "none", marginTop: "1rem" }}
+        title="AMC Certificate PDF"
+      />
+
+      {/* <WarrantyCertificate
         companyName={data?.customerName}
         dateOfCommissioning={data?.dateOfCommissioning}
         durationInYears={formatDuration(data?.durationInMonths) || 0}
         panels={data?.panels || []}
         projectName={data?.projectName}
-      />
+      /> */}
 
     </Stack>
   );
