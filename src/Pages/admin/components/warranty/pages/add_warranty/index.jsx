@@ -308,6 +308,7 @@ const AddWarranty = () => {
                                     value={formData.dateOfCommissioning}
                                     onChange={handleChange}
                                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                                    placeholder="Enter date Of commissioining"
                                     required
                                 />
                             </div>

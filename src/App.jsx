@@ -66,8 +66,8 @@ function App() {
           <Route path="warranty/:id" element={<WarrantyDetails />} />
           <Route path="amc" element={<Amc />} />
           <Route path="amc/create" element={<AddAmc />} />
-          <Route path="amc/edit/:id" element={<WarrantyDetails />} />
-          <Route path="amc/:id" element={<WarrantyDetails />} />
+          <Route path="amc/edit/:id" element={<AddAmc />} />
+          <Route path="amc/:id" element={<WarrantyDetails type={"amc"} />} />
           <Route path="reports" element={<Reports />} />
         </Route>
         <Route path="*" element={<Navigate to="/admin" />} />

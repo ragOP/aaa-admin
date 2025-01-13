@@ -24,6 +24,7 @@ const AmcTable = ({
   };
 
   const onClickTableItem = (_e, data) => {
+    console.log(">>", data)
     navigate(`/admin/amc/${data?._id}`);
   };
 
@@ -87,12 +88,12 @@ const AmcTable = ({
     amount: (data) => <Typography>{data?.amount || "-"}</Typography>,
     action: (data) => (
       <Stack direction="row" alignItems="center" justifyContent="center" gap="0.5rem">
-        <IconButton onClick={onDownloadAmcCeritficatePdf} sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={(e) => onDownloadAmcCeritficatePdf(e, data)} sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Download">
             <ArrowDownTrayIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>
         </IconButton>
-        <IconButton onClick={onEditWarranty}  sx={{ padding: "0.5rem", width: "fit-content" }}>
+        <IconButton onClick={(e) => onEditWarranty(e, data)} sx={{ padding: "0.5rem", width: "fit-content" }}>
           <Tooltip arrow title="Edit">
             <PencilIcon style={{ width: 20, height: 20, strokeWidth: 2 }} />
           </Tooltip>

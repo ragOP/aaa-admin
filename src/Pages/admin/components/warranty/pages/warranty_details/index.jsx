@@ -15,22 +15,24 @@ const formatDuration = (months) => {
 
   let result = "";
   if (years > 0) {
-      result += `${years} year${years > 1 ? "s" : ""}`;
+    result += `${years} year${years > 1 ? "s" : ""}`;
   }
   if (remainingMonths > 0) {
-      result += `${years > 0 ? " " : ""}${remainingMonths} month${remainingMonths > 1 ? "s" : ""}`;
+    result += `${years > 0 ? " " : ""}${remainingMonths} month${remainingMonths > 1 ? "s" : ""}`;
   }
   return result;
 };
 
-const WarrantyDetails = () => {
+const WarrantyDetails = ({ type = "warranty" }) => {
   const { id } = useParams();
+
+  console.log(">>", type)
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["warranty", id],
     queryFn: async () => {
       const response = await apiService({
-        endpoint: `${endpoints.getWarranty}/${id}`,
+        endpoint: `${type === "warranty" ? endpoints.getWarranty : endpoints.getAmc}/${id}`,
         method: "GET",
       });
       return response?.response?.data?.data || null;

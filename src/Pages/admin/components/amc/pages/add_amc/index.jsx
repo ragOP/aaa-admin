@@ -27,7 +27,7 @@ const AddAmc = () => {
     const [isSubmittingWarranty, setIsSubmittingWarranty] = useState(false);
     const [isFetchingData, setIsFetchingData] = useState(false);
     const [formData, setFormData] = useState(amcFormInitialState);
-
+    console.log(">>>", formData)
     const {
         data: projectsData = [],
         isLoading,
@@ -167,11 +167,13 @@ const AddAmc = () => {
             setIsFetchingData(true)
 
             const amcApiResponse = await apiService({
-                endpoint: `${endpoints.amc}/id`,
+                endpoint: `${endpoints.getAmc}/${id}`,
                 method: "GET",
             })
             if (amcApiResponse?.response?.success) {
                 const data = amcApiResponse?.response?.data?.data;
+
+                console.log(">>>", data?.dateOfCommissioning)
                 setFormData((prev) => ({
                     ...prev,
                     projectId: data?.projectId || "",
@@ -183,7 +185,6 @@ const AddAmc = () => {
                     amount: data?.amount || 0,
                     dateOfCommissioning: data?.dateOfCommissioning ? new Date(data.dateOfCommissioning)?.toISOString()?.split('T')?.[0] : "",
                 }))
-                setFormData(data)
             }
         } catch (e) {
             console.log(e)
@@ -268,7 +269,6 @@ const AddAmc = () => {
                             />
                         </div>
 
-                        {/* Email Field */}
                         <div className="mb-6">
                             <label
                                 htmlFor="dateOfCommissioning"
