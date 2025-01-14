@@ -19,6 +19,7 @@ const amcFormInitialState = {
     dateOfCommissioning: "",
     amount: 0,
     amcPdf: null,
+    scope: ""
 }
 
 const AddAmc = () => {
@@ -95,8 +96,6 @@ const AddAmc = () => {
             [e.target.name]: e.target.value,
         });
     };
-
-    console.log("FORM", formData)
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -352,6 +351,25 @@ const AddAmc = () => {
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                                 placeholder="Enter amount"
                                 min="1"
+                                required
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label
+                                htmlFor="scope"
+                                className="block text-gray-700 font-bold mb-2"
+                            >
+                                Scope
+                            </label>
+                            <input
+                                type="number"
+                                id="scope"
+                                name="scope"
+                                value={formData.scope}
+                                onChange={handleChange}
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
+                                placeholder="Enter Scope"
                                 required
                             />
                         </div>

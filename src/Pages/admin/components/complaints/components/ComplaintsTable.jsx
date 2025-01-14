@@ -105,7 +105,8 @@ const ComplaintsTable = ({
     { value: "address", label: "Address", align: "center" },
     { value: "date", label: "Date", align: "center" },
     { value: "last_activity", label: "Last activity", align: "center" },
-    { value: "status_code", label: "Code", align: "center" },
+    { value: "status_code", label: "Job Code", align: "center" },
+    { value: "happy_code", label: "Happy Code", align: "center" },
   ];
 
   const complaintsRowMapping = {
