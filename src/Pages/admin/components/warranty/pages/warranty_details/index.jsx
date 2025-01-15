@@ -42,8 +42,6 @@ const WarrantyDetails = ({ type = "warranty" }) => {
   if (isError || !data)
     return <Typography>Failed to load warranty details.</Typography>;
 
-  console.log(">>", type,data, type === "warranty" ? data?.warrntyPdf : data?.amcPdf)
-
 
   return (
     <Stack

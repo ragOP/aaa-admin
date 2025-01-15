@@ -127,6 +127,7 @@ const AddAmc = () => {
             formDataWithPdf.append("panels", JSON.stringify(formData.panels));
             formDataWithPdf.append("dateOfCommissioning", formData.dateOfCommissioning);
             formDataWithPdf.append("amount", formData.amount);
+            formDataWithPdf.append("scope", formData.scope);
             formDataWithPdf.append("amcPdf", pdfFile);
 
             const response = id ?
@@ -188,6 +189,7 @@ const AddAmc = () => {
                     durationInMonths: data?.durationInMonths || "",
                     panels: data?.panels || [],
                     amount: data?.amount || 0,
+                    scope: data?.scope || "",
                     dateOfCommissioning: data?.dateOfCommissioning ? new Date(data.dateOfCommissioning)?.toISOString()?.split('T')?.[0] : "",
                 }))
             }

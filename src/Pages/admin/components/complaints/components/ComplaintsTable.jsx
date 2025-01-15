@@ -69,7 +69,7 @@ const ComplaintsTable = ({
     setSelectedComplaint(null);
   };
 
-  const onEditTechnician = () => {};
+  const onEditTechnician = () => { };
 
   const onChangeText = (e) => {
     setSearchText(e.target.value);
@@ -144,7 +144,8 @@ const ComplaintsTable = ({
         {customDateFormatting({ date: data?.updatedAt }) || "-"}
       </Typography>
     ),
-    status_code: (data) => <Typography>{data?.statusCode || "-"}</Typography>,
+    status_code: (data) => <Typography>{data?.statusCode && data?.activity === "Pending" ? data?.statusCode : "-"}</Typography>,
+    happy_code: (data) => <Typography>{data?.statusCode && data?.activity === "Ongoing" ? data?.statusCode : "-"}</Typography>,
   };
 
   return (
