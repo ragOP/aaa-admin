@@ -1,11 +1,10 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { Stack, Typography, Card, CardContent } from "@mui/material";
+import { Stack, Typography, Card } from "@mui/material";
 import { apiService } from "../../../../../../utils/backend/apiService";
 import { endpoints } from "../../../../../../utils/backend/endpoints";
 import BoxCircularLoader from "../../../../../../components/loaders/BoxCircularLoader";
-import WarrantyCertificate from "../../../../../../components/warranty_certificate";
 
 export const formatDuration = (months) => {
   if (!months) return "";
@@ -61,14 +60,6 @@ const WarrantyDetails = ({ type = "warranty" }) => {
         style={{ border: "none", marginTop: "1rem" }}
         title="AMC Certificate PDF"
       />
-
-      {/* <WarrantyCertificate
-        companyName={data?.customerName}
-        dateOfCommissioning={data?.dateOfCommissioning}
-        durationInYears={formatDuration(data?.durationInMonths) || 0}
-        panels={data?.panels || []}
-        projectName={data?.projectName}
-      /> */}
 
     </Stack>
   );

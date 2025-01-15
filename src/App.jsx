@@ -26,6 +26,7 @@ import ProjectsDetailsPage from "./Pages/admin/components/projects/pages/project
 import AddWarranty from "./Pages/admin/components/warranty/pages/add_warranty/index.jsx";
 import AddAmc from "./Pages/admin/components/amc/pages/add_amc/index.jsx";
 import WarrantyDetails from "./Pages/admin/components/warranty/pages/warranty_details/index.jsx";
+import Notifications from "./Pages/notifications/index.jsx";
 
 function App() {
   return (
@@ -37,6 +38,14 @@ function App() {
             <PublicRoute>
               <LoginPage />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/notifications"
+          element={
+            <ProtectedRoute>
+              <Notifications />
+            </ProtectedRoute>
           }
         />
         <Route

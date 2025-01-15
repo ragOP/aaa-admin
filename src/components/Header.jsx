@@ -17,6 +17,10 @@ const Header = () => {
     navigate("/login");
   };
 
+  const onNavigateToNotification = () => {
+    navigate("/notifications");
+  }
+
   const username = localStorage.getItem("username");
   const currentGreeting = getGreetingBasedOnTime();
 
@@ -28,12 +32,15 @@ const Header = () => {
         </h4>
       </div>
       <div className="flex items-center space-x-4">
-        {/* <button
-          className="p-2  mb-0  rounded-full bg-slate-100 hover:bg-gray-200 "
-          aria-label="Notifications"
-        >
-          <BellIcon className="h-6 w-6 text-black" />
-        </button> */}
+        <Tooltip arrow title="Notification">
+          <button
+            onClick={onNavigateToNotification}
+            className="p-2  mb-0  rounded-full bg-slate-100 hover:bg-gray-200 "
+            aria-label="Notifications"
+          >
+            <BellIcon className="h-6 w-6 text-black" />
+          </button>
+        </Tooltip>
 
         {/* Logout Icon */}
         <Tooltip arrow title="Logout">

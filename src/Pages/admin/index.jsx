@@ -106,12 +106,12 @@ const Admin = () => {
       access: true,
       icon: <CalendarIcon className="h-5 w-5 text-gray-600" />,
     },
-    {
-      value: "reports",
-      label: "Reports",
-      access: true,
-      icon: <ChartBarIcon className="h-5 w-5 text-gray-600" />,
-    },
+    // {
+    //   value: "reports",
+    //   label: "Reports",
+    //   access: true,
+    //   icon: <ChartBarIcon className="h-5 w-5 text-gray-600" />,
+    // },
   ];
 
   return (

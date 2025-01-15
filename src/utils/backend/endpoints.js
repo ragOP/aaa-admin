@@ -16,4 +16,5 @@ export const endpoints = {
   createAmc: "api/admin/generate-amc",
   getAmc: "api/admin/get-amc",
   editAmc: "api/admin/edit-amc",
+  notifications: "api/admin/get-all-notification",
 };
