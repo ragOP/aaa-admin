@@ -65,7 +65,7 @@ const ComplaintsDetailsPage = () => {
               </Typography>
               <Typography variant="body1" color="text.secondary">
                 {data?.activity === "Ongoing" ? "Happy Code" : "Job Code"}:{" "}
-                {data.jobCode || "-"}
+                {data.statusCode || "-"}
               </Typography>
             </CardContent>
           </Card>

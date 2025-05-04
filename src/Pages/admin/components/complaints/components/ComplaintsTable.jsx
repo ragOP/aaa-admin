@@ -105,7 +105,7 @@ const ComplaintsTable = ({
     { value: "address", label: "Address", align: "center" },
     { value: "date", label: "Date", align: "center" },
     { value: "last_activity", label: "Last activity", align: "center" },
-    { value: "job_code", label: "Job Code", align: "center" },
+    { value: "status_code", label: "Job Code", align: "center" },
     { value: "happy_code", label: "Happy Code", align: "center" },
   ];
 
@@ -144,8 +144,8 @@ const ComplaintsTable = ({
         {customDateFormatting({ date: data?.updatedAt }) || "-"}
       </Typography>
     ),
-    job_code: (data) => <Typography>{data?.jobCode && data?.activity === "Pending" ? data?.jobCode : "-"}</Typography>,
-    happy_code: (data) => <Typography>{data?.jobCode && data?.activity === "Ongoing" ? data?.jobCode : "-"}</Typography>,
+    status_code: (data) => <Typography>{data?.statusCode && data?.activity === "Pending" ? data?.statusCode : "-"}</Typography>,
+    happy_code: (data) => <Typography>{data?.statusCode && data?.activity === "Ongoing" ? data?.statusCode : "-"}</Typography>,
   };
 
   return (
