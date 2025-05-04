@@ -64,7 +64,8 @@ const ComplaintsDetailsPage = () => {
                 {data.projectName}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                {data?.activity === "Ongoing" ? "Happy Code" : "Status Code"}: {data.statusCode || "-"}
+                {data?.activity === "Ongoing" ? "Happy Code" : "Job Code"}:{" "}
+                {data.jobCode || "-"}
               </Typography>
             </CardContent>
           </Card>
@@ -157,23 +158,38 @@ const ComplaintsDetailsPage = () => {
           </Card>
         )}
 
+        {/* Voice Note */}
+        {data?.voiceNote && (
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Voice Note
+              </Typography>
+              <audio controls>
+                <source src={data.voiceNote} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </CardContent>
+          </Card>
+        )}
+
         {/* Technician Details */}
         {(data?.technician?.name ||
           data?.technician?.email ||
           data?.technician?.employeeId) && (
-            <Card>
-              <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Technician Details
-                </Typography>
-                <Typography>Name: {data.technician?.name || "-"}</Typography>
-                <Typography>Email: {data.technician?.email || "-"}</Typography>
-                <Typography>
-                  Employee ID: {data.technician?.employeeId || "-"}
-                </Typography>
-              </CardContent>
-            </Card>
-          )}
+          <Card>
+            <CardContent>
+              <Typography variant="h6" gutterBottom>
+                Technician Details
+              </Typography>
+              <Typography>Name: {data.technician?.name || "-"}</Typography>
+              <Typography>Email: {data.technician?.email || "-"}</Typography>
+              <Typography>
+                Employee ID: {data.technician?.employeeId || "-"}
+              </Typography>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Dates */}
         {(data.createdAt || data.updatedAt) && (

@@ -214,7 +214,6 @@ const AddProject = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                   placeholder="Enter title"
-                  required
                 />
               </div>
             )}
@@ -281,7 +280,6 @@ const AddProject = () => {
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
                   placeholder="Enter site location"
-                  required
                 />
               </div>
             )}
@@ -300,7 +298,6 @@ const AddProject = () => {
                   value={formData.activity}
                   onChange={handleChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-                  required
                 >
                   <option value="Pending">Pending</option>
                   <option value="Ongoing">Ongoing</option>
@@ -324,7 +321,6 @@ const AddProject = () => {
                   accept="application/pdf"
                   onChange={handleFiles}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-                  required
                 />
               </div>
             )}
@@ -344,7 +340,6 @@ const AddProject = () => {
                   accept="application/pdf"
                   onChange={handleFiles}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-                  required
                 />
               </div>
             )}
@@ -364,7 +359,6 @@ const AddProject = () => {
                   accept="application/pdf"
                   onChange={handleFiles}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-200"
-                  required
                 />
               </div>
             )}
