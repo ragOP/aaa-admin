@@ -39,6 +39,9 @@ const ClientDetailsPage = () => {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
+    toast.loading("Changing password...", {
+      duration: 2000,
+    });
     try {
       const response = await apiService({
         endpoint: endpoints.changePassword,
@@ -54,7 +57,7 @@ const ClientDetailsPage = () => {
       }
     } catch (error) {
       toast.error("Something went wrong!");
-    }finally {
+    } finally {
       setNewPassword("");
       handleClose();
     }

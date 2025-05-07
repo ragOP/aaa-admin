@@ -32,6 +32,9 @@ const TechniciansDetailsPage = () => {
   const handleClose = () => setOpen(false);
 
   const handleSubmit = async () => {
+    toast.loading("Changing password...", {
+      duration: 2000,
+    });
     try {
       const response = await apiService({
         endpoint: endpoints.changePassword,
