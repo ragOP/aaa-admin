@@ -17,4 +17,5 @@ export const endpoints = {
   getAmc: "api/admin/get-amc",
   editAmc: "api/admin/edit-amc",
   notifications: "api/admin/get-all-notification",
+  changePassword: "api/admin/change-password",
 };
