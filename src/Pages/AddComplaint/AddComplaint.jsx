@@ -23,7 +23,7 @@ const AddComplaint = () => {
     customerId: null,
     projectName: "",
     siteLocation: "",
-    panels: [""],
+    panelSectionName: "",
     issueDescription: "",
     severity: "",
     images: [],
@@ -66,16 +66,6 @@ const AddComplaint = () => {
     const { name, value } = e.target;
 
     console.log(">>", name, value);
-
-    if (name === "panels") {
-      setFormData((prev) => {
-        const updatedPanels = [...prev.panels];
-        updatedPanels[index] = value;
-        return { ...prev, panels: updatedPanels };
-      });
-
-      return;
-    }
     setFormData((prev) => ({
       ...prev,
       [name]: value,
@@ -114,10 +104,11 @@ const AddComplaint = () => {
     }));
   };
 
-  const handleChangePanel = (e) => {
+  const handleChangePanel = (event, value) => {
+    console.log("panel >>", value)
     setFormData((prev) => ({
       ...prev,
-      panels: [...prev.panels, e.target.value],
+      panelSectionName: value || "",
     }));
   };
 
@@ -140,20 +131,12 @@ const AddComplaint = () => {
     const loadingToastId = toast.loading("Adding Complaint. Please wait...");
 
     try {
-      const filteredPanels = formData.panels.filter(
-        (panel) => panel.trim() !== ""
-      );
-
-      // const dataToSubmit = { ...formData, panels: filteredPanels };
-
       const dataToSubmit = new FormData();
       dataToSubmit.append("customerId", formData.customerId);
       dataToSubmit.append("projectName", formData.projectName);
       dataToSubmit.append("issueDescription", formData.issueDescription);
       dataToSubmit.append("siteLocation", formData.siteLocation);
-      filteredPanels.forEach((panel, index) => {
-        dataToSubmit.append(`panels[${index}]`, panel);
-      });
+      dataToSubmit.append("panelSectionName", formData.panelSectionName);
       dataToSubmit.append("severity", formData.severity);
       formData.images.forEach((image) => {
         dataToSubmit.append("images", image);
@@ -278,41 +261,42 @@ const AddComplaint = () => {
             {/* Panel Dropdown Field */}
             {formData.customerId && selectedProject && (
               <div className="mb-4">
-                <label
-                  htmlFor="panel"
-                  className="block text-gray-700 font-bold mb-2"
-                >
-                  Select Panels
-                </label>
-                <Autocomplete
-                  multiple
-                  options={selectedProject.panels || []}
-                  getOptionLabel={(option) => option || ""}
-                  value={formData.panels}
-                  onChange={(_, selectedPanels) => {
-                    setFormData((prev) => ({
-                      ...prev,
-                      panels: selectedPanels,
-                    }));
-                  }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          backgroundColor: "#fff",
-                          borderRadius: "0.5rem",
-                        },
-                        "& input": {
-                          border: "none",
-                        },
-                      }}
-                    />
-                  )}
-                />
-              </div>
+              <label
+                htmlFor="title"
+                className="block text-gray-700 font-bold mb-2"
+              >
+                Select Panel
+              </label>
+              <Autocomplete
+                options={selectedProject.panels || []}
+                getOptionLabel={(option) => option || ""}
+                loading={isLoading}
+                disableClearable
+                value={
+                  selectedProject.panels?.find(
+                    (panel) => panel === formData.panelSectionName
+                  ) || null
+                }
+                onChange={handleChangePanel}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "#fff",
+                        borderRadius: "0.5rem",
+                      },
+                      "& input": {
+                        border: "none",
+                      },
+                    }}
+                    required
+                  />
+                )}
+              />
+            </div>
             )}
 
             {/* Site Location Field */}
