@@ -27,6 +27,7 @@ import AddWarranty from "./Pages/admin/components/warranty/pages/add_warranty/in
 import AddAmc from "./Pages/admin/components/amc/pages/add_amc/index.jsx";
 import WarrantyDetails from "./Pages/admin/components/warranty/pages/warranty_details/index.jsx";
 import Notifications from "./Pages/notifications/index.jsx";
+import AddComplaint from "./Pages/AddComplaint/AddComplaint.jsx";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
           <Route path="customers/create" element={<AddCustomer />} />
           <Route path="complaints" element={<Complaints />} />
           <Route path="complaints/:id" element={<ComplaintsDetailsPage />} />
+          <Route path="complaints/create" element={<AddComplaint />} />
           <Route path="projects" element={<Projects />} />
           <Route path="projects/:id" element={<ProjectsDetailsPage />} />
           <Route path="projects/create" element={<AddProject />} />

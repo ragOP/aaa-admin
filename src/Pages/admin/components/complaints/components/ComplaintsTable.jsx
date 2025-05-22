@@ -96,6 +96,10 @@ const ComplaintsTable = ({
     navigate(`/admin/complaints/${data?._id}`);
   };
 
+    const onNavigateToPage = () => {
+      navigate(`/admin/complaints/create`);
+    };
+
   const complaintsTableTitles = [
     { value: "name", label: "Name", align: "left" },
     { value: "technician", label: "Technician", align: "center" },
@@ -196,7 +200,8 @@ const ComplaintsTable = ({
               value={searchText}
               placeholder="Search complaints"
             />
-            {/* <Button
+            <Button
+            onClick={onNavigateToPage}
             variant="contained"
             startIcon={
               <PlusIcon style={{ width: 16, height: 16, strokeWidth: 2 }} />
@@ -209,7 +214,7 @@ const ComplaintsTable = ({
             }}
           >
             Add Complaint
-          </Button> */}
+          </Button>
           </Stack>
         </Stack>
 
