@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
@@ -13,7 +13,7 @@ import {
 import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { endpoints } from "../../utils/backend/endpoints";
 import { apiService } from "../../utils/backend/apiService";
-import { set } from "date-fns";
+import AudioRecorder from "../../components/AudioRecorder";
 
 const AddComplaint = () => {
   const navigate = useNavigate();
@@ -29,6 +29,7 @@ const AddComplaint = () => {
     images: [],
   });
   const [selectedProject, setSelectedProject] = useState(null);
+  const [audioBlob, setAudioBlob] = useState(null);
 
   // Severity Options
   const severityOptions = [
@@ -97,19 +98,15 @@ const AddComplaint = () => {
     setSelectedProject(selectedProject);
   };
 
-  const handleSeverityChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      severity: e.target.value,
-    }));
-  };
-
   const handleChangePanel = (event, value) => {
-    console.log("panel >>", value)
     setFormData((prev) => ({
       ...prev,
       panelSectionName: value || "",
     }));
+  };
+
+  const handleRecordingComplete = (blob) => {
+    setAudioBlob(blob);
   };
 
   // const handleAddPanel = () => {
@@ -142,6 +139,14 @@ const AddComplaint = () => {
         dataToSubmit.append("images", image);
       });
 
+     if(audioBlob){
+      dataToSubmit.append('voiceNote', {
+          uri: `file://${audioBlob}`,
+          type: 'audio/wav',
+          name: 'audio.wav',
+        });
+     }
+
       const response = await apiService({
         endpoint: `api/customer/new-complaint/${formData.customerId}`,
         method: "POST",
@@ -158,10 +163,6 @@ const AddComplaint = () => {
       toast.error(`Error: ${error.message}`, { id: loadingToastId });
     }
   };
-
-  console.log(">>>", formData);
-
-  console.log(">>>", selectedProject);
 
   return (
     <>
@@ -261,42 +262,42 @@ const AddComplaint = () => {
             {/* Panel Dropdown Field */}
             {formData.customerId && selectedProject && (
               <div className="mb-4">
-              <label
-                htmlFor="title"
-                className="block text-gray-700 font-bold mb-2"
-              >
-                Select Panel
-              </label>
-              <Autocomplete
-                options={selectedProject.panels || []}
-                getOptionLabel={(option) => option || ""}
-                loading={isLoading}
-                disableClearable
-                value={
-                  selectedProject.panels?.find(
-                    (panel) => panel === formData.panelSectionName
-                  ) || null
-                }
-                onChange={handleChangePanel}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                      "& .MuiOutlinedInput-root": {
-                        backgroundColor: "#fff",
-                        borderRadius: "0.5rem",
-                      },
-                      "& input": {
-                        border: "none",
-                      },
-                    }}
-                    required
-                  />
-                )}
-              />
-            </div>
+                <label
+                  htmlFor="title"
+                  className="block text-gray-700 font-bold mb-2"
+                >
+                  Select Panel
+                </label>
+                <Autocomplete
+                  options={selectedProject.panels || []}
+                  getOptionLabel={(option) => option || ""}
+                  loading={isLoading}
+                  disableClearable
+                  value={
+                    selectedProject.panels?.find(
+                      (panel) => panel === formData.panelSectionName
+                    ) || null
+                  }
+                  onChange={handleChangePanel}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      size="small"
+                      sx={{
+                        "& .MuiOutlinedInput-root": {
+                          backgroundColor: "#fff",
+                          borderRadius: "0.5rem",
+                        },
+                        "& input": {
+                          border: "none",
+                        },
+                      }}
+                      required
+                    />
+                  )}
+                />
+              </div>
             )}
 
             {/* Site Location Field */}
@@ -415,6 +416,8 @@ const AddComplaint = () => {
                   ))}
               </div>
             </div>
+
+             <AudioRecorder onRecordingComplete={handleRecordingComplete} />
 
             {/* Submit Button */}
             <Button
